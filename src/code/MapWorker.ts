@@ -1,7 +1,6 @@
 import { calcLightZone, calculateMobAttack, randchoose, randint } from "../utils";
 import { EntityType } from "./common/EntityEnum";
 import { RenderType } from "./common/RenderEnum";
-import { FPS } from "./Constants";
 import { IEntity } from "./interfaces/IEntity";
 import { IMob } from "./interfaces/IMob";
 import { IPlayer } from "./interfaces/IPlayer";

@@ -144,22 +144,22 @@ export class RunMode {
     }
 
     public async go(): Promise<void> {
-        document.getElementById('inv-1')?.addEventListener('click', (e) => {
+        document.getElementById('inv-1')?.addEventListener('click', () => {
             this.applyItem(0);
         });
-        document.getElementById('inv-2')?.addEventListener('click', (e) => {
+        document.getElementById('inv-2')?.addEventListener('click', () => {
             this.applyItem(1);
         });
-        document.getElementById('inv-3')?.addEventListener('click', (e) => {
+        document.getElementById('inv-3')?.addEventListener('click', () => {
             this.applyItem(2);
         });
-        document.getElementById('inv-4')?.addEventListener('click', (e) => {
+        document.getElementById('inv-4')?.addEventListener('click', () => {
             this.applyItem(3);
         });
-        document.getElementById('inv-5')?.addEventListener('click', (e) => {
+        document.getElementById('inv-5')?.addEventListener('click', () => {
             this.applyItem(4);
         });
-        document.getElementById('inv-6')?.addEventListener('click', (e) => {
+        document.getElementById('inv-6')?.addEventListener('click', () => {
             this.applyItem(5);
         });
         this.createMap();
