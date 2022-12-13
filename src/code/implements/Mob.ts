@@ -18,6 +18,6 @@ export class Mob implements IMob {
         this.id = uuid();
         this.x = x;
         this.y = y;
-        this.data = {hp: randint(level + 3, level + 5), power: level};
+        this.data = {hp: randint(level + 3, level + 5), power: randint(level, level + 1)};
     }
 }

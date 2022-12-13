@@ -1,5 +1,7 @@
 import {EntityType} from "./code/common/EntityEnum";
 import {IEntity} from "./code/interfaces/IEntity";
+import { IMob } from "./code/interfaces/IMob";
+import { IPlayer } from "./code/interfaces/IPlayer";
 
 export function randint(min: number, max: number): number {
     min = Math.ceil(min);
@@ -35,12 +37,11 @@ export function range(min: number, max: number): Array<number> {
     return arr;
 }
 
-// export function uuidv4(): string {
-//   return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
-//       (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(
-//           16),
-//   );
-// }
+export function calculateMobAttack(player: IPlayer, mob: IMob): IPlayer {
+    const attack = mob.data.power - player.data.armory;
+    player.data.hp -= Math.abs(attack);
+    return player;
+}
 
 export function calcLightZone(data: Array<IEntity>): Array<IEntity> {
     const player = data.find(x => x.type === EntityType.Player)!;

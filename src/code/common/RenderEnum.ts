@@ -1,4 +1,7 @@
 export enum RenderType {
+    Potion,
+    Weapon,
+    Armory,
     Void,
     Void1,
     Void2,

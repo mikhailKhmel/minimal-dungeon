@@ -1,16 +1,17 @@
-import {calcLightZone, randchoose, randint} from "../utils";
-import {EntityType} from "./common/EntityEnum";
-import {RenderType} from "./common/RenderEnum";
-import {FPS} from "./Constants";
-import {IEntity} from "./interfaces/IEntity";
-import {IMob} from "./interfaces/IMob";
-import {IPlayer} from "./interfaces/IPlayer";
+import { calcLightZone, calculateMobAttack, randchoose, randint } from "../utils";
+import { EntityType } from "./common/EntityEnum";
+import { RenderType } from "./common/RenderEnum";
+import { FPS } from "./Constants";
+import { IEntity } from "./interfaces/IEntity";
+import { IMob } from "./interfaces/IMob";
+import { IPlayer } from "./interfaces/IPlayer";
+import { ItemCreator } from "./ItemCreator";
 
 const DIRECTIONS = {
-    UP: {x: 0, y: -1},
-    DOWN: {x: 0, y: 1},
-    LEFT: {x: -1, y: 0},
-    RIGHT: {x: 1, y: 0},
+    UP: { x: 0, y: -1 },
+    DOWN: { x: 0, y: 1 },
+    LEFT: { x: -1, y: 0 },
+    RIGHT: { x: 1, y: 0 },
 };
 
 export class MapWorker {
@@ -23,14 +24,14 @@ export class MapWorker {
         mapData = this.playerAttackCleaner(mapData);
         mapData = this.mobAttackCleaner(mapData);
 
-        if (this.playerMove >= FPS / 15 && lastKeyCode) {
+        if (this.playerMove >= 6 && lastKeyCode) {
             mapData = this.keyHandler(mapData, lastKeyCode);
             this.playerMove = 0;
         } else {
             this.playerMove++;
         }
 
-        if (FPS / 5 === this.mobMove) {
+        if (10 === this.mobMove) {
             mapData = this.mobMover(mapData);
             this.mobMove = 0;
         } else {
@@ -44,7 +45,7 @@ export class MapWorker {
             x => x.type === EntityType.Player);
         for (const mob of mobs) {
             const direction = chooseDirection(mob as IMob, player as IPlayer);
-            mapData = this.entityMove(mapData, {...direction}, mob.id);
+            mapData = this.entityMove(mapData, { ...direction }, mob.id);
             mapData = attackPlayer(mapData, mob as IMob, player as IPlayer);
         }
 
@@ -57,7 +58,7 @@ export class MapWorker {
             const y2 = mob.y + 1;
             if (player.x >= x1 && player.y >= y1 && player.x <= x2 && player.y <=
                 y2) {
-                player.data.hp -= mob.data.power;
+                player = calculateMobAttack(player, mob);
                 player.renderType = RenderType.RedPlayer;
             }
 
@@ -114,7 +115,7 @@ export class MapWorker {
                         break;
                     }
                 }
-                return {x, y};
+                return { x, y };
             } else {
                 let x = randint(-1, 1);
                 let y: number;
@@ -128,9 +129,9 @@ export class MapWorker {
                 const futurePlace = mapData.find(
                     data => data.x === mob.x + x && data.y === mob.y + y)!;
                 if (futurePlace.type === EntityType.Void) {
-                    return {x, y};
+                    return { x, y };
                 } else {
-                    return {x: 0, y: 0};
+                    return { x: 0, y: 0 };
                 }
             }
         }
@@ -197,12 +198,12 @@ export class MapWorker {
 
     private entityMove(mapData: Array<IEntity>, direction: { x: number, y: number }, entityId: string) {
         const entityIndex = mapData.findIndex(x => x.id === entityId);
-        const entity: IEntity = {...mapData[entityIndex]};
+        const entity: IEntity = { ...mapData[entityIndex] };
         const futureX = entity.x + direction.x;
         const futureY = entity.y + direction.y;
         const futurePlaceIndex = mapData.findIndex(
             data => data.x === futureX && data.y === futureY);
-        const futurePlace = {...mapData[futurePlaceIndex]};
+        const futurePlace = { ...mapData[futurePlaceIndex] };
 
         let renderType: RenderType = this.chooseRenderType(entity, direction);
 
@@ -271,6 +272,7 @@ export class MapWorker {
             data => data.x === player.x && data.y === player.y + 1)!;
 
         let attackedMob: IEntity | null = null;
+        let openedChest: IEntity | null = null;
 
         if (leftItem && leftItem.type === EntityType.Mob) {
             attackedMob = leftItem;
@@ -280,11 +282,29 @@ export class MapWorker {
             attackedMob = rightItem;
         } else if (downItem && downItem.type === EntityType.Mob) {
             attackedMob = downItem;
+        } else {
+            if (leftItem && leftItem.type === EntityType.Chest) {
+                openedChest = leftItem;
+            } else if (upItem && upItem.type === EntityType.Chest) {
+                openedChest = upItem;
+            } else if (rightItem && rightItem.type === EntityType.Chest) {
+                openedChest = rightItem;
+            } else if (downItem && downItem.type === EntityType.Chest) {
+                openedChest = downItem;
+            }
         }
 
         if (attackedMob) {
             (attackedMob as IMob).data.hp -= player.data.power;
             mapData[mapData.findIndex(x => x.id === attackedMob!.id)].renderType = RenderType.RedMob;
+        } else if (openedChest) {
+            mapData[mapData.findIndex(x => x.id === openedChest!.id)].type = EntityType.Void;
+            mapData[mapData.findIndex(x => x.id === openedChest!.id)].renderType = RenderType.Void;
+            if (player.data.inventory.length < 6) {
+                const itemCreator = new ItemCreator();
+                player.data.inventory.push(itemCreator.create());
+                console.log(player);
+            }
         }
 
         return mapData;

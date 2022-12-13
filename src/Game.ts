@@ -4,11 +4,7 @@ import { RunMode } from "./code/implements/RunMode";
 import { GameOverMode } from "./code/implements/GameOverMode";
 
 export class Game {
-    mode: GameModes = GameModes.RUN;
-
-    constructor() {
-
-    }
+    mode: GameModes = GameModes.START;
 
     public go() {
         switch (this.mode) {

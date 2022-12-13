@@ -74,7 +74,7 @@ export class MapGenerator {
     }
 
     private spawnMobs() {
-        const mobsCount = this.rooms.length + 5;
+        const mobsCount = this.rooms.length + 2;
         let c = 0;
         while (c < mobsCount) {
             const rndX = randint(0, this.maps.length - 1);

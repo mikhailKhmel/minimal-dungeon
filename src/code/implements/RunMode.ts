@@ -7,12 +7,13 @@ import { MapGenerator } from "../MapGenerator";
 import { MapWorker } from "../MapWorker";
 import { Render } from "../Render";
 import { sleep, tick } from "../../utils";
+import { IPlayer } from "../interfaces/IPlayer";
 
 export class RunMode {
     context: CanvasRenderingContext2D | null = null;
     entitiesGenerator: EntitiesFiller;
     mapGenerator: MapGenerator;
-    render: Render;
+    render: Render | null = null;
     mapWorker: MapWorker;
     mapData: Array<IEntity> = [];
     lastKeyCode: string = '';
@@ -23,7 +24,6 @@ export class RunMode {
 
         this.entitiesGenerator = new EntitiesFiller();
         this.mapGenerator = new MapGenerator();
-        this.render = new Render();
         this.mapWorker = new MapWorker();
         this.changeMode = changeMode;
 
@@ -69,27 +69,104 @@ export class RunMode {
                             </div>
                         </div>
                     </div>
+                    <div class="row gx-5">
+                        <div id="inventory" class="container">
+                            <div class="row gx-5">
+                                <div class="col p-1">
+                                    <div class="card">
+                                        <div class="card-body btn">
+                                            <img id="inv-1" class="rounded mx-auto" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col p-1">
+                                    <div class="card">
+                                        <div class="card-body btn">
+                                            <img id="inv-2" class="rounded mx-auto"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col p-1">
+                                    <div class="card">
+                                        <div class="card-body btn">
+                                            <img id="inv-3" class="rounded mx-auto"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gx-5">
+                                <div class="col p-1">
+                                    <div class="card">
+                                        <div class="card-body btn">
+                                            <img id="inv-4" class="rounded mx-auto"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col p-1">
+                                    <div class="card">
+                                        <div class="card-body btn">
+                                            <img id="inv-5" class="rounded mx-auto"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col p-1">
+                                    <div class="card">
+                                        <div class="card-body btn">
+                                            <img id="inv-6" class="rounded mx-auto"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         `;
         const game = document.getElementById('game') as HTMLCanvasElement;
         game.width = WIDTH;
         game.height = HEIGHT;
         this.context = game.getContext('2d') as CanvasRenderingContext2D;
-        await this.render.loadImages();
+        this.render = new Render();
+        await this.render.loadAssets();
     }
     createMap() {
         this.mapData = this.entitiesGenerator.generate(this.mapGenerator.createMap(), this.level);
     }
 
+    applyItem(invIndex: number) {
+        let player = this.mapData.find(x => x.type === EntityType.Player) as IPlayer;
+        let inv = player.data.inventory;
+        if (inv[invIndex]) {
+            player = inv[invIndex].do(player);
+            player.data.inventory = inv.filter((item) => item.id !== inv[invIndex].id);
+        }
+    }
+
     public async go(): Promise<void> {
+        document.getElementById('inv-1')?.addEventListener('click', (e) => {
+            this.applyItem(0);
+        });
+        document.getElementById('inv-2')?.addEventListener('click', (e) => {
+            this.applyItem(1);
+        });
+        document.getElementById('inv-3')?.addEventListener('click', (e) => {
+            this.applyItem(2);
+        });
+        document.getElementById('inv-4')?.addEventListener('click', (e) => {
+            this.applyItem(3);
+        });
+        document.getElementById('inv-5')?.addEventListener('click', (e) => {
+            this.applyItem(4);
+        });
+        document.getElementById('inv-6')?.addEventListener('click', (e) => {
+            this.applyItem(5);
+        });
         this.createMap();
         while (true) {
             await sleep(tick(FPS));
-            this.render.renderMap(this.context!, this.mapData);
-            this.render.renderInfo(
+            this.render!.renderMap(this.context!, this.mapData);
+            this.render!.renderInfo(
                 (this.mapData.find(x => x.type === EntityType.Player) as Player).data);
             this.mapWorker.go(this.mapData, this.lastKeyCode);
             this.lastKeyCode = '';
