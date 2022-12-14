@@ -182,7 +182,7 @@ export class RunMode {
             this.lastKeyCode = '';
 
             if (this.mapWorker.gameOver) {
-                //break;
+                break;
             }
 
             if (this.mapWorker.isNewLevel) {
