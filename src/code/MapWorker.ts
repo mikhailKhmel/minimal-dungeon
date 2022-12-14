@@ -23,10 +23,10 @@ export class MapWorker {
         mapData = this.playerAttackCleaner(mapData);
         mapData = this.mobAttackCleaner(mapData);
 
-        if (this.playerMove >= 5 && lastKeyCode && lastKeyCode !== 'Space') {
+        if (this.playerMove >= 5 && lastKeyCode && lastKeyCode !== 'KeyE') {
             mapData = this.keyHandler(mapData, lastKeyCode);
             this.playerMove = 0;
-        } else if (lastKeyCode === 'Space') {
+        } else if (lastKeyCode === 'KeyE') {
             mapData = this.keyHandler(mapData, lastKeyCode);
         }
         else {
@@ -254,7 +254,7 @@ export class MapWorker {
             case 'KeyD': {
                 return this.entityMove(mapData, DIRECTIONS.RIGHT, player.id);
             }
-            case 'Space': {
+            case 'KeyE': {
                 return this.playerAttack(mapData, player as IPlayer);
             }
             default: {
