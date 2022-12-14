@@ -23,14 +23,17 @@ export class MapWorker {
         mapData = this.playerAttackCleaner(mapData);
         mapData = this.mobAttackCleaner(mapData);
 
-        if (this.playerMove >= 6 && lastKeyCode) {
+        if (this.playerMove >= 5 && lastKeyCode && lastKeyCode !== 'Space') {
             mapData = this.keyHandler(mapData, lastKeyCode);
             this.playerMove = 0;
-        } else {
+        } else if (lastKeyCode === 'Space') {
+            mapData = this.keyHandler(mapData, lastKeyCode);
+        }
+        else {
             this.playerMove++;
         }
 
-        if (10 === this.mobMove) {
+        if (15 === this.mobMove) {
             mapData = this.mobMover(mapData);
             this.mobMove = 0;
         } else {

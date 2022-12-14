@@ -43,7 +43,7 @@ export class MapGenerator {
     }
 
     private spawnChests() {
-        let chestCount = randint(this.rooms.length - 2, this.rooms.length + 2);
+        let chestCount = randint(this.rooms.length, this.rooms.length + 2);
         let c = 0
         while (c < chestCount) {
             if (this.maps && this.maps.length !== 0) {
@@ -74,7 +74,7 @@ export class MapGenerator {
     }
 
     private spawnMobs() {
-        const mobsCount = this.rooms.length + 2;
+        const mobsCount = randint(this.rooms.length - 3, this.rooms.length + 2);
         let c = 0;
         while (c < mobsCount) {
             const rndX = randint(0, this.maps.length - 1);

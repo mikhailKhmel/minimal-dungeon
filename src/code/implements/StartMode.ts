@@ -20,7 +20,7 @@ export class StartMode {
                         <li class="list-group-item">A - влево;</li>
                         <li class="list-group-item">S - вниз;</li>
                         <li class="list-group-item">D - вправо;</li>
-                        <li class="list-group-item">Space - атака или взаимолдействие с предметами</li>
+                        <li class="list-group-item">Space - атака или взаимодействие с предметами</li>
                         <li class="list-group-item">Клик мышью по предметам инвентаря - применить предмет</li>
                     </ul>
                 </p>

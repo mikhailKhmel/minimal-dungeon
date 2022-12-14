@@ -1,13 +1,13 @@
-import { EntityType } from "../common/EntityEnum";
-import { FPS, GameModes, HEIGHT, WIDTH } from "../Constants";
-import { EntitiesFiller } from "../EntitiesFiller";
-import { Player } from "./Player";
-import { IEntity } from "../interfaces/IEntity";
-import { MapGenerator } from "../MapGenerator";
-import { MapWorker } from "../MapWorker";
-import { Render } from "../Render";
-import { sleep, tick } from "../../utils";
-import { IPlayer } from "../interfaces/IPlayer";
+import {EntityType} from "../common/EntityEnum";
+import {FPS, GameModes, HEIGHT, WIDTH} from "../Constants";
+import {EntitiesFiller} from "../EntitiesFiller";
+import {Player} from "./Player";
+import {IEntity} from "../interfaces/IEntity";
+import {MapGenerator} from "../MapGenerator";
+import {MapWorker} from "../MapWorker";
+import {Render} from "../Render";
+import {sleep, tick} from "../../utils";
+import {IPlayer} from "../interfaces/IPlayer";
 
 export class RunMode {
     context: CanvasRenderingContext2D | null = null;
@@ -20,12 +20,13 @@ export class RunMode {
     level: number = 1;
     changeMode: Function | null = null;
 
-    constructor(changeMode: Function) {
+    constructor(changeMode: Function, render: Render) {
 
         this.entitiesGenerator = new EntitiesFiller();
         this.mapGenerator = new MapGenerator();
         this.mapWorker = new MapWorker();
         this.changeMode = changeMode;
+        this.render = render;
 
         window.addEventListener('keydown', (e) => {
             this.lastKeyCode = e.code;
@@ -41,6 +42,16 @@ export class RunMode {
             </div>
             <div class="col-4">
                 <div class="container px-4">
+                    <div class="row gx-5">
+                        <div class="col p-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Уровень</h5>
+                                    <p class="card-text" id="level"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row gx-5">
                         <div class="col p-3">
                             <div class="card">
@@ -127,9 +138,8 @@ export class RunMode {
         game.width = WIDTH;
         game.height = HEIGHT;
         this.context = game.getContext('2d') as CanvasRenderingContext2D;
-        this.render = new Render();
-        await this.render.loadAssets();
     }
+
     createMap() {
         this.mapData = this.entitiesGenerator.generate(this.mapGenerator.createMap(), this.level);
     }
@@ -167,12 +177,12 @@ export class RunMode {
             await sleep(tick(FPS));
             this.render!.renderMap(this.context!, this.mapData);
             this.render!.renderInfo(
-                (this.mapData.find(x => x.type === EntityType.Player) as Player).data);
+                (this.mapData.find(x => x.type === EntityType.Player) as Player).data, this.level);
             this.mapWorker.go(this.mapData, this.lastKeyCode);
             this.lastKeyCode = '';
 
             if (this.mapWorker.gameOver) {
-                break;
+                //break;
             }
 
             if (this.mapWorker.isNewLevel) {

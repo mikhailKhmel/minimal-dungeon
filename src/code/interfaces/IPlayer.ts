@@ -1,5 +1,5 @@
 import {IEntity} from "./IEntity"
-import { IItem } from "./IItem"
+import {IItem} from "./IItem"
 
 export interface IPlayer extends IEntity {
     data: {

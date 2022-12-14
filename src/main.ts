@@ -1,5 +1,9 @@
-import { Game } from "./Game";
+import { Render } from "./code/Render";
+import {Game} from "./Game";
 
-const game = new Game();
-game.go();
-
+const render = new Render();
+render.loadAssets()
+.then(function () {
+    const game = new Game(render);
+    game.go();
+});

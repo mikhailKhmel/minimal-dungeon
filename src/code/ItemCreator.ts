@@ -7,7 +7,17 @@ import { IItem } from "./interfaces/IItem";
 
 export class ItemCreator {
     create(): IItem {
-        const type = randint(0, 2);
+        const rnd = randint(1, 100);
+        let type: ItemType;
+
+        if (rnd > 0 && rnd < 60) {
+            type = ItemType.Potion;
+        } else if (rnd >= 60 && rnd < 80) {
+            type = ItemType.Weapon;
+        } else {
+            type = ItemType.Armory;
+        }
+        
         switch (type) {
             case ItemType.Armory: {
                 return new Armory();

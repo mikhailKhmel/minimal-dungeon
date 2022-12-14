@@ -2,7 +2,7 @@ import {EntityType} from "../common/EntityEnum";
 import {v4 as uuid} from 'uuid';
 import {IPlayer} from '../interfaces/IPlayer';
 import {RenderType} from "../common/RenderEnum";
-import { IItem } from "../interfaces/IItem";
+import {IItem} from "../interfaces/IItem";
 
 
 export class Player implements IPlayer {

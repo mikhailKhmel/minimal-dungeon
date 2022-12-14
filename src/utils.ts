@@ -1,7 +1,7 @@
 import {EntityType} from "./code/common/EntityEnum";
 import {IEntity} from "./code/interfaces/IEntity";
-import { IMob } from "./code/interfaces/IMob";
-import { IPlayer } from "./code/interfaces/IPlayer";
+import {IMob} from "./code/interfaces/IMob";
+import {IPlayer} from "./code/interfaces/IPlayer";
 
 export function randint(min: number, max: number): number {
     min = Math.ceil(min);
