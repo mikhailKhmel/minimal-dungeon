@@ -65,13 +65,19 @@ export class Render {
     }
 
     public renderMap(context: CanvasRenderingContext2D, mapData: Array<IEntity>): void {
-        const player = mapData.find(
-            x => x.type === EntityType.Player)!;
+        const starttime = Date.now();
+        const player = mapData.find(x => x.type === EntityType.Player)!;
         const x1 = player.x - Math.floor((HEIGHT / IMG_SIZE) / 2);
         const y1 = player.y - Math.floor((HEIGHT / IMG_SIZE) / 2);
+        const x2 = player.x + Math.floor((HEIGHT / IMG_SIZE) / 2);
+        const y2 = player.y + Math.floor((HEIGHT / IMG_SIZE) / 2);
+        const lightZoneData = mapData.filter(x => x.light && (x.x >= x1 && x.x <= x2 && x.y >= y1 && x.y <= y2));
+        context.fillStyle = '#272b30';
+        context.fillRect(0, 0, WIDTH, HEIGHT);
+
         for (let i = 0; i < HEIGHT / IMG_SIZE; i++) {
             for (let j = 0; j < WIDTH / IMG_SIZE; j++) {
-                const mapItem = mapData.find(
+                const mapItem = lightZoneData.find(
                     data => data.x === x1 + i && data.y === y1 + j);
                 if (mapItem) {
                     if (mapItem.light) {
@@ -85,20 +91,11 @@ export class Render {
                         context.drawImage(img, i * IMG_SIZE, j * IMG_SIZE,
                             IMG_SIZE,
                             IMG_SIZE);
-                    } else {
-                        context.fillStyle = '#272b30';
-                        context.fillRect(i * IMG_SIZE, j * IMG_SIZE,
-                            IMG_SIZE,
-                            IMG_SIZE);
                     }
-                }  else {
-                    context.fillStyle = '#272b30';
-                    context.fillRect(i * IMG_SIZE, j * IMG_SIZE,
-                        IMG_SIZE,
-                        IMG_SIZE);
                 }
             }
         }
+        console.log(Date.now() - starttime);
     }
 
     public renderInfo(playerData: { hp: number, armory: number, power: number, inventory: Array<IItem> }, level: number, chests: number, mobs: number) {

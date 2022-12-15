@@ -20,9 +20,6 @@ export class EntityCreator {
         this.level = level;
     }
 
-    /**
-     * CreateEntity
-     */
     public CreateEntity(): IEntity {
         switch (this.type) {
             case EntityType.Void:

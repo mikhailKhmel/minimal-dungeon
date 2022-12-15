@@ -1,12 +1,12 @@
 import { EntityType } from "../common/EntityEnum";
-import { GameModes, HEIGHT, WIDTH } from "../Constants";
+import { FPS, GameModes, HEIGHT, WIDTH } from "../Constants";
 import { EntitiesFiller } from "../EntitiesFiller";
 import { Player } from "./Player";
 import { IEntity } from "../interfaces/IEntity";
 import { MapGenerator } from "../MapGenerator";
 import { MapWorker } from "../MapWorker";
 import { Render } from "../Render";
-import { sleep } from "../../utils";
+import { sleep, tick } from "../../utils";
 import { IPlayer } from "../interfaces/IPlayer";
 
 export class RunMode {
@@ -190,7 +190,7 @@ export class RunMode {
         });
         this.createMap();
         while (true) {
-            await sleep(1);
+            await sleep(tick(FPS));
             this.render!.renderMap(this.context!, this.mapData);
             this.render!.renderInfo(
                 (this.mapData.find(x => x.type === EntityType.Player) as Player).data, this.level, 
