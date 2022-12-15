@@ -1,12 +1,12 @@
 import { EntityType } from "../common/EntityEnum";
-import { FPS, GameModes, HEIGHT, WIDTH } from "../Constants";
+import { GameModes, HEIGHT, WIDTH } from "../Constants";
 import { EntitiesFiller } from "../EntitiesFiller";
 import { Player } from "./Player";
 import { IEntity } from "../interfaces/IEntity";
 import { MapGenerator } from "../MapGenerator";
 import { MapWorker } from "../MapWorker";
 import { Render } from "../Render";
-import { sleep, tick } from "../../utils";
+import { sleep } from "../../utils";
 import { IPlayer } from "../interfaces/IPlayer";
 
 export class RunMode {
