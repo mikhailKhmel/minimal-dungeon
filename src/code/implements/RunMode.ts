@@ -51,6 +51,22 @@ export class RunMode {
                                 </div>
                             </div>
                         </div>
+                        <div class="col p-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Количество сундуков</h5>
+                                    <p class="card-text" id="chests"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col p-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Количество монстров</h5>
+                                    <p class="card-text" id="mobs"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="row gx-5">
                         <div class="col p-3">
@@ -177,7 +193,8 @@ export class RunMode {
             await sleep(1);
             this.render!.renderMap(this.context!, this.mapData);
             this.render!.renderInfo(
-                (this.mapData.find(x => x.type === EntityType.Player) as Player).data, this.level);
+                (this.mapData.find(x => x.type === EntityType.Player) as Player).data, this.level, 
+                this.mapData.filter(x => x.type === EntityType.Chest).length, this.mapData.filter(x => x.type === EntityType.Mob).length);
             this.mapWorker.go(this.mapData, this.lastKeyCode);
             this.lastKeyCode = '';
 

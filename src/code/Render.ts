@@ -91,13 +91,20 @@ export class Render {
                             IMG_SIZE,
                             IMG_SIZE);
                     }
+                }  else {
+                    context.fillStyle = '#272b30';
+                    context.fillRect(i * IMG_SIZE, j * IMG_SIZE,
+                        IMG_SIZE,
+                        IMG_SIZE);
                 }
             }
         }
     }
 
-    public renderInfo(playerData: { hp: number, armory: number, power: number, inventory: Array<IItem> }, level: number) {
+    public renderInfo(playerData: { hp: number, armory: number, power: number, inventory: Array<IItem> }, level: number, chests: number, mobs: number) {
         document.getElementById('level')!.innerHTML = level.toString();
+        document.getElementById('chests')!.innerHTML = chests.toString();
+        document.getElementById('mobs')!.innerHTML = mobs.toString();
         document.getElementById('hp')!.innerHTML = playerData.hp.toString();
         document.getElementById('armory')!.innerHTML = playerData.armory.toString();
         document.getElementById('power')!.innerHTML = playerData.power.toString();
