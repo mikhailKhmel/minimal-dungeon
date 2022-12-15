@@ -1,13 +1,13 @@
-import {EntityType} from "../common/EntityEnum";
-import {FPS, GameModes, HEIGHT, WIDTH} from "../Constants";
-import {EntitiesFiller} from "../EntitiesFiller";
-import {Player} from "./Player";
-import {IEntity} from "../interfaces/IEntity";
-import {MapGenerator} from "../MapGenerator";
-import {MapWorker} from "../MapWorker";
-import {Render} from "../Render";
-import {sleep, tick} from "../../utils";
-import {IPlayer} from "../interfaces/IPlayer";
+import { EntityType } from "../common/EntityEnum";
+import { FPS, GameModes, HEIGHT, WIDTH } from "../Constants";
+import { EntitiesFiller } from "../EntitiesFiller";
+import { Player } from "./Player";
+import { IEntity } from "../interfaces/IEntity";
+import { MapGenerator } from "../MapGenerator";
+import { MapWorker } from "../MapWorker";
+import { Render } from "../Render";
+import { sleep, tick } from "../../utils";
+import { IPlayer } from "../interfaces/IPlayer";
 
 export class RunMode {
     context: CanvasRenderingContext2D | null = null;
@@ -174,7 +174,7 @@ export class RunMode {
         });
         this.createMap();
         while (true) {
-            await sleep(tick(FPS));
+            await sleep(1);
             this.render!.renderMap(this.context!, this.mapData);
             this.render!.renderInfo(
                 (this.mapData.find(x => x.type === EntityType.Player) as Player).data, this.level);
