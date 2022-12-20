@@ -1,7 +1,7 @@
 import { calcLightZone, calculateMobAttack, randchoose, randint } from "../utils";
 import { EntityType } from "./enums/EntityEnum";
+import { ItemType } from "./enums/ItemEnum";
 import { RenderType } from "./enums/RenderEnum";
-import { Boss } from "./implements/Boss";
 import { IEntity } from "./interfaces/IEntity";
 import { IMob } from "./interfaces/IMob";
 import { IPlayer } from "./interfaces/IPlayer";
@@ -262,7 +262,7 @@ export class MapWorker {
 
     private keyHandler(mapData: Array<IEntity>, lastKeyCode: string): Array<IEntity> {
         const player = mapData.find(x => x.type === EntityType.Player)!;
-        console.log(lastKeyCode);
+        //console.log(lastKeyCode);
         switch (lastKeyCode) {
             case 'KeyW': {
                 return this.entityMove(mapData, DIRECTIONS.UP, player.id);
@@ -320,15 +320,13 @@ export class MapWorker {
 
         if (attackedMob) {
             attackedMob.data.hp -= player.data.power;
-            console.log(attackedMob instanceof Boss);
             mapData[mapData.findIndex(x => x.id === attackedMob!.id)].renderType = attackedMob.type === EntityType.Boss ? RenderType.RedBoss : RenderType.RedMob;
         } else if (openedChest) {
             mapData[mapData.findIndex(x => x.id === openedChest!.id)].type = EntityType.Void;
             mapData[mapData.findIndex(x => x.id === openedChest!.id)].renderType = RenderType.Void;
             if (player.data.inventory.length < 6) {
-                const itemCreator = new ItemCreator();
-                player.data.inventory.push(itemCreator.create());
-                console.log(player);
+                player.data.inventory.push(ItemCreator.create());
+                //console.log(player);
             }
         }
 
@@ -363,6 +361,9 @@ export class MapWorker {
                 mapData[mapData.findIndex(x => x.id === redBoss.id)].type = EntityType.Void;
                 mapData[mapData.findIndex(x => x.id === redBoss.id)].renderType = RenderType.Void;
                 ls.killedMobs++;
+                if ((mapData[mapData.findIndex(x => x.type === EntityType.Player)] as IPlayer).data.inventory.length < 6) {
+                    (mapData[mapData.findIndex(x => x.type === EntityType.Player)] as IPlayer).data.inventory.push(ItemCreator.create(ItemType.Scroll));
+                }
             } else {
                 mapData[mapData.findIndex(x => x.id === redBoss.id)].renderType = RenderType.BossDown1;
             }
