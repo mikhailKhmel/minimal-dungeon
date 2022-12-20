@@ -1,5 +1,5 @@
-import {GameModes} from "../Constants";
-import ls from "../localstorage";
+import {GameModes} from "./Constants";
+import ls from "./localstorage";
 
 export class GameOverMode {
     changeMode: Function | null = null;

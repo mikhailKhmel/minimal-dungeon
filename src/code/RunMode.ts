@@ -1,14 +1,14 @@
-import { EntityType } from "../enums/EntityEnum";
-import { FPS, GameModes, HEIGHT, WIDTH } from "../Constants";
-import { EntitiesFiller } from "../EntitiesFiller";
-import { Player } from "./Player";
-import { IEntity } from "../interfaces/IEntity";
-import { MapGenerator } from "../MapGenerator";
-import { MapWorker } from "../MapWorker";
-import { Render } from "../Render";
-import { tick } from "../../utils";
-import { IPlayer } from "../interfaces/IPlayer";
-import ls from "../localstorage";
+import { EntityType } from "./enums/EntityEnum";
+import { FPS, GameModes, HEIGHT, WIDTH } from "./Constants";
+import { EntitiesFiller } from "./EntitiesFiller";
+import { Player } from "./implements/Player";
+import { IEntity } from "./interfaces/IEntity";
+import { MapGenerator } from "./MapGenerator";
+import { MapWorker } from "./MapWorker";
+import { Render } from "./Render";
+import { tick } from "../utils";
+import { IPlayer } from "./interfaces/IPlayer";
+import ls from "./localstorage";
 
 export class RunMode {
     context: CanvasRenderingContext2D | null = null;
@@ -218,8 +218,8 @@ export class RunMode {
                 this.lastKeyCode = '';
 
                 if (this.mapWorker.gameOver) {
-                    this.changeMode!(GameModes.GAMEOVER);
-                    clearInterval(interval);
+                    // this.changeMode!(GameModes.GAMEOVER);
+                    // clearInterval(interval);
                 }
 
                 if (this.mapWorker.isNewLevel) {

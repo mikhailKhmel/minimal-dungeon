@@ -48,5 +48,6 @@ export enum RenderType {
     Ladder,
     Chest,
     RedPlayer,
-    RedMob
+    RedMob,
+    Scroll
 }

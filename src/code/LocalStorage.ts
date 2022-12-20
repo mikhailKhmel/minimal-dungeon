@@ -8,7 +8,13 @@ class LocalStorage {
         return this._killedMobs ?? 0;
     }
 
-    
+    private _allVisible: boolean = false;
+    set allVisible(value: boolean) {
+        this._allVisible = value;
+    }    
+    get allVisible(): boolean {
+        return this._allVisible;
+    }
 }
 const ls = new LocalStorage();
 
