@@ -1,6 +1,6 @@
 import { randint } from "../utils";
-import { ItemType } from "./common/ItemEnum";
-import { Armory } from "./implements/Armory";
+import { ItemType } from "./enums/ItemEnum";
+import { Armor } from "./implements/Armor";
 import { Potion } from "./implements/Potion";
 import { Weapon } from "./implements/Weapon";
 import { IItem } from "./interfaces/IItem";
@@ -15,12 +15,12 @@ export class ItemCreator {
         } else if (rnd >= 60 && rnd < 80) {
             type = ItemType.Weapon;
         } else {
-            type = ItemType.Armory;
+            type = ItemType.Armor;
         }
         
         switch (type) {
-            case ItemType.Armory: {
-                return new Armory();
+            case ItemType.Armor: {
+                return new Armor();
             }
             case ItemType.Weapon: {
                 return new Weapon();

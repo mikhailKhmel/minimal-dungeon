@@ -4,5 +4,6 @@ export enum EntityType {
     Player = 2,
     Mob = 3,
     Ladder = 4,
-    Chest = 5
+    Chest = 5,
+    Boss = 6
 }

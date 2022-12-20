@@ -5,7 +5,7 @@ export interface IPlayer extends IEntity {
     data: {
         hp: number,
         power: number,
-        armory: number,
+        armor: number,
         inventory: Array<IItem>
     }
 }

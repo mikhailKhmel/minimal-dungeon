@@ -1,4 +1,4 @@
-import {EntityType} from "./code/common/EntityEnum";
+import {EntityType} from "./code/enums/EntityEnum";
 import {IEntity} from "./code/interfaces/IEntity";
 import {IMob} from "./code/interfaces/IMob";
 import {IPlayer} from "./code/interfaces/IPlayer";
@@ -38,7 +38,7 @@ export function range(min: number, max: number): Array<number> {
 }
 
 export function calculateMobAttack(player: IPlayer, mob: IMob): IPlayer {
-    const attack = mob.data.power - player.data.armory;
+    const attack = mob.data.power - player.data.armor;
     player.data.hp -= Math.abs(attack);
     return player;
 }

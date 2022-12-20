@@ -9,7 +9,7 @@ export class StartMode {
 
     show(): void {
         document.getElementById('app')!.innerHTML = `
-        <div class="container">
+        <div class="container mt-2">
         <div class="row justify-content-center align-items-center">
             <div class="col-auto mb-3 text-center" style="width: 25rem;">
                 <button id="start-btn" type="button" class="btn btn-warning btn-lg">СТАРТ</button>

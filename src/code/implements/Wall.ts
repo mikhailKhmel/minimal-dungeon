@@ -1,7 +1,7 @@
-import {EntityType} from "../common/EntityEnum";
+import {EntityType} from "../enums/EntityEnum";
 import {IEntity} from "../interfaces/IEntity";
 import {v4 as uuid} from 'uuid';
-import {RenderType} from "../common/RenderEnum";
+import {RenderType} from "../enums/RenderEnum";
 import {randchoose} from "../../utils";
 
 

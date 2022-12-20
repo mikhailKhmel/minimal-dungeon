@@ -5,12 +5,12 @@ import {randint} from "../../utils";
 import {RenderType} from "../enums/RenderEnum";
 
 
-export class Mob implements IMob {
+export class Boss implements IMob {
     id: string;
     x: number;
     y: number;
-    type: EntityType = EntityType.Mob;
-    renderType: RenderType = RenderType.MobDown1;
+    type: EntityType = EntityType.Boss;
+    renderType: RenderType = RenderType.BossDown1;
     data: { hp: number; power: number; };
     light: Boolean = false;
 
@@ -18,6 +18,6 @@ export class Mob implements IMob {
         this.id = uuid();
         this.x = x;
         this.y = y;
-        this.data = {hp: randint(level + 2, level + 4), power: randint(level, level + 1)};
+        this.data = {hp: randint(level + 7, level + 10), power: randint(level + 2, level + 4)};
     }
 }

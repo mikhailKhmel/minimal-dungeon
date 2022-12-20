@@ -1,39 +1,31 @@
-import {EntityType} from "./common/EntityEnum";
-import {Chest} from "./implements/Chest";
-import {Ladder} from "./implements/Ladder";
-import {Mob} from "./implements/Mob";
-import {Player} from "./implements/Player";
-import {Void} from "./implements/Void";
-import {Wall} from "./implements/Wall";
-import {IEntity} from "./interfaces/IEntity";
+import { EntityType } from "./enums/EntityEnum";
+import { Boss } from "./implements/Boss";
+import { Chest } from "./implements/Chest";
+import { Ladder } from "./implements/Ladder";
+import { Mob } from "./implements/Mob";
+import { Player } from "./implements/Player";
+import { Void } from "./implements/Void";
+import { Wall } from "./implements/Wall";
+import { IEntity } from "./interfaces/IEntity";
 
 export class EntityCreator {
-    type: EntityType;
-    x: number;
-    y: number;
-    level: number;
 
-    constructor(type: EntityType, x: number, y: number, level: number) {
-        this.type = type;
-        this.x = x;
-        this.y = y;
-        this.level = level;
-    }
-
-    public CreateEntity(): IEntity {
-        switch (this.type) {
+    public static create(type: EntityType, x: number, y: number, level: number): IEntity {
+        switch (type) {
             case EntityType.Void:
-                return new Void(this.x, this.y);
+                return new Void(x, y);
             case EntityType.Chest:
-                return new Chest(this.x, this.y);
+                return new Chest(x, y);
             case EntityType.Ladder:
-                return new Ladder(this.x, this.y);
+                return new Ladder(x, y);
             case EntityType.Wall:
-                return new Wall(this.x, this.y);
+                return new Wall(x, y);
             case EntityType.Mob:
-                return new Mob(this.x, this.y, this.level);
+                return new Mob(x, y, level);
             case EntityType.Player:
-                return new Player(this.x, this.y);
+                return new Player(x, y);
+            case EntityType.Boss:
+                return new Boss(x, y, level);
             default:
                 throw new Error('нет такой сущности');
         }

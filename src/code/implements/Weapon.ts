@@ -1,5 +1,5 @@
 import {v4} from "uuid";
-import {ItemType} from "../common/ItemEnum";
+import {ItemType} from "../enums/ItemEnum";
 import {IItem} from "../interfaces/IItem";
 import {IPlayer} from "../interfaces/IPlayer";
 

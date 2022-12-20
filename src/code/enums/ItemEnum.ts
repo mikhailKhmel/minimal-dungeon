@@ -1,5 +1,5 @@
 export enum ItemType {
-    Armory,
+    Armor,
     Weapon,
     Potion
 }

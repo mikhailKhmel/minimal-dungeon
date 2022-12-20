@@ -1,13 +1,28 @@
 import { loadImage } from "../utils";
-import { EntityType } from "./common/EntityEnum";
-import { ItemType } from "./common/ItemEnum";
-import { RenderType } from "./common/RenderEnum";
+import { EntityType } from "./enums/EntityEnum";
+import { ItemType } from "./enums/ItemEnum";
+import { RenderType } from "./enums/RenderEnum";
 import { HEIGHT, IMG_SIZE, WIDTH } from "./Constants";
 import { IEntity } from "./interfaces/IEntity";
 import { IItem } from "./interfaces/IItem";
 
 export class Render {
     assets: Array<{ path: string, src: HTMLImageElement, type: RenderType }> = [];
+    level: HTMLElement | null = null;
+    chests: HTMLElement | null = null;
+    mobs: HTMLElement | null = null;
+    hp: HTMLElement | null = null;
+    armory: HTMLElement | null = null;
+    power: HTMLElement | null = null;
+
+    public loadInfo() {
+        this.level = document.getElementById('level')!;
+        this.chests = document.getElementById('chests')!;
+        this.mobs = document.getElementById('mobs')!;
+        this.hp = document.getElementById('hp')!;
+        this.armory = document.getElementById('armory')!;
+        this.power = document.getElementById('power')!;
+    }
 
     public async loadAssets() {
         this.assets = [
@@ -30,6 +45,21 @@ export class Render {
             { path: '', src: await loadImage('../assets/entities/ladder.bmp'), type: RenderType.Ladder },
             { path: '', src: await loadImage('../assets/player/redPlayer.bmp'), type: RenderType.RedPlayer },
             { path: '', src: await loadImage('../assets/entities/mobs/redMob.bmp'), type: RenderType.RedMob },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_red.jpg'), type: RenderType.RedBoss },
+
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_up1.jpg'), type: RenderType.BossUp1 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_up2.jpg'), type: RenderType.BossUp2 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_up3.jpg'), type: RenderType.BossUp3 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_right1.jpg'), type: RenderType.BossRight1 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_right2.jpg'), type: RenderType.BossRight2 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_right3.jpg'), type: RenderType.BossRight3 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_left1.jpg'), type: RenderType.BossLeft1 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_left2.jpg'), type: RenderType.BossLeft2 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_left3.jpg'), type: RenderType.BossLeft3 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_down1.jpg'), type: RenderType.BossDown1 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_down2.jpg'), type: RenderType.BossDown2 },
+            { path: '', src: await loadImage('../assets/entities/bosses/boss_down3.jpg'), type: RenderType.BossDown3 },
+
             { path: '', src: await loadImage('../assets/entities/mobs/mob_up1.bmp'), type: RenderType.MobUp1 },
             { path: '', src: await loadImage('../assets/entities/mobs/mob_up2.bmp'), type: RenderType.MobUp2 },
             { path: '', src: await loadImage('../assets/entities/mobs/mob_up3.bmp'), type: RenderType.MobUp3 },
@@ -65,15 +95,16 @@ export class Render {
     }
 
     public renderMap(context: CanvasRenderingContext2D, mapData: Array<IEntity>): void {
-        const starttime = Date.now();
+        //const starttime = Date.now();
+        context.fillStyle = '#272b30';
+        context.fillRect(0, 0, WIDTH, HEIGHT);
+
         const player = mapData.find(x => x.type === EntityType.Player)!;
         const x1 = player.x - Math.floor((HEIGHT / IMG_SIZE) / 2);
         const y1 = player.y - Math.floor((HEIGHT / IMG_SIZE) / 2);
         const x2 = player.x + Math.floor((HEIGHT / IMG_SIZE) / 2);
         const y2 = player.y + Math.floor((HEIGHT / IMG_SIZE) / 2);
         const lightZoneData = mapData.filter(x => x.light && (x.x >= x1 && x.x <= x2 && x.y >= y1 && x.y <= y2));
-        context.fillStyle = '#272b30';
-        context.fillRect(0, 0, WIDTH, HEIGHT);
 
         for (let i = 0; i < HEIGHT / IMG_SIZE; i++) {
             for (let j = 0; j < WIDTH / IMG_SIZE; j++) {
@@ -95,16 +126,16 @@ export class Render {
                 }
             }
         }
-        console.log(Date.now() - starttime);
+        //console.log(Date.now() - starttime);
     }
 
-    public renderInfo(playerData: { hp: number, armory: number, power: number, inventory: Array<IItem> }, level: number, chests: number, mobs: number) {
-        document.getElementById('level')!.innerHTML = level.toString();
-        document.getElementById('chests')!.innerHTML = chests.toString();
-        document.getElementById('mobs')!.innerHTML = mobs.toString();
-        document.getElementById('hp')!.innerHTML = playerData.hp.toString();
-        document.getElementById('armory')!.innerHTML = playerData.armory.toString();
-        document.getElementById('power')!.innerHTML = playerData.power.toString();
+    public renderInfo(playerData: { hp: number, armor: number, power: number, inventory: Array<IItem> }, level: number, chests: number, mobs: number) {
+        this.level!.innerText = level.toString();
+        this.chests!.innerText = chests.toString();
+        this.mobs!.innerText = mobs.toString();
+        this.hp!.innerText = playerData.hp.toString();
+        this.armory!.innerText = playerData.armor.toString();
+        this.power!.innerText = playerData.power.toString();
 
         for (let index = 0; index < 6; index++) {
             let path: string = '';
@@ -112,7 +143,7 @@ export class Render {
             const item = playerData.inventory[index];
             if (item) {
                 switch (item.type) {
-                    case ItemType.Armory: {
+                    case ItemType.Armor: {
                         path = this.assets.find(x => x.type === RenderType.Armory)!.path;
                         break;
                     }

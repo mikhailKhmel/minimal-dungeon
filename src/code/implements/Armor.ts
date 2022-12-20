@@ -1,18 +1,18 @@
 import {v4} from "uuid";
-import {ItemType} from "../common/ItemEnum";
+import {ItemType} from "../enums/ItemEnum";
 import {IItem} from "../interfaces/IItem";
 import {IPlayer} from "../interfaces/IPlayer";
 
-export class Armory implements IItem {
+export class Armor implements IItem {
     id: string = '';
-    type: ItemType = ItemType.Armory;
+    type: ItemType = ItemType.Armor;
 
     constructor() {
         this.id = v4();
     }
 
     do(player: IPlayer) {
-        player.data.armory += 1;
+        player.data.armor += 1;
         return player;
     };
 }
