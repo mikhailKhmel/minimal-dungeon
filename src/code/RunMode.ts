@@ -218,8 +218,8 @@ export class RunMode {
                 this.lastKeyCode = '';
 
                 if (this.mapWorker.gameOver) {
-                    // this.changeMode!(GameModes.GAMEOVER);
-                    // clearInterval(interval);
+                    this.changeMode!(GameModes.GAMEOVER);
+                    clearInterval(interval);
                 }
 
                 if (this.mapWorker.isNewLevel) {
