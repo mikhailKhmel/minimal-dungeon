@@ -1,7 +1,7 @@
 import { GameModes } from "./code/Constants";
-import { StartMode } from "./code/implements/StartMode";
-import { RunMode } from "./code/implements/RunMode";
-import { GameOverMode } from "./code/implements/GameOverMode";
+import { StartMode } from "./code/StartMode";
+import { RunMode } from "./code/RunMode";
+import { GameOverMode } from "./code/GameOverMode";
 import { Render } from "./code/Render";
 
 export class Game {

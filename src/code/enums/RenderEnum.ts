@@ -32,8 +32,22 @@ export enum RenderType {
     MobLeft1,
     MobLeft2,
     MobLeft3,
+    RedBoss,
+    BossDown1,
+    BossDown2,
+    BossDown3,
+    BossUp1,
+    BossUp2,
+    BossUp3,
+    BossRight1,
+    BossRight2,
+    BossRight3,
+    BossLeft1,
+    BossLeft2,
+    BossLeft3,
     Ladder,
     Chest,
     RedPlayer,
-    RedMob
+    RedMob,
+    Scroll
 }

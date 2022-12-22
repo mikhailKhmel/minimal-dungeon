@@ -30,7 +30,7 @@ export class MapGenerator {
         this.cleanMap();
         this.genRooms();
         this.spawnPlayer();
-        this.spawnMobs();
+        this.spawnMobsAndBoss();
         this.spawnLadder();
         this.spawnChests();
 
@@ -73,7 +73,7 @@ export class MapGenerator {
         }
     }
 
-    private spawnMobs() {
+    private spawnMobsAndBoss() {
         const mobsCount = randint(this.rooms.length - 3, this.rooms.length + 2);
         let c = 0;
         while (c < mobsCount) {
@@ -82,6 +82,19 @@ export class MapGenerator {
             if (this.maps[rndX][rndY] === '0') {
                 this.maps[rndX][rndY] = '3';
                 c++;
+            }
+        }
+
+        c = 0;
+        while (c < 1) {
+            if (this.maps && this.maps.length !== 0) {
+                const rndRoom = this.rooms[randint(0, this.rooms.length - 1)];
+                const rndX = randint(rndRoom.x1, rndRoom.x2 - 1);
+                const rndY = randint(rndRoom.y1, rndRoom.y2 - 1);
+                if (this.maps[rndX][rndY] === '0') {
+                    this.maps[rndX][rndY] = '6';
+                    c++;
+                }
             }
         }
     }

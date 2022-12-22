@@ -1,10 +1,12 @@
 import { calcLightZone, calculateMobAttack, randchoose, randint } from "../utils";
-import { EntityType } from "./common/EntityEnum";
-import { RenderType } from "./common/RenderEnum";
+import { EntityType } from "./enums/EntityEnum";
+import { ItemType } from "./enums/ItemEnum";
+import { RenderType } from "./enums/RenderEnum";
 import { IEntity } from "./interfaces/IEntity";
 import { IMob } from "./interfaces/IMob";
 import { IPlayer } from "./interfaces/IPlayer";
 import { ItemCreator } from "./ItemCreator";
+import ls from "./localstorage";
 
 const DIRECTIONS = {
     UP: { x: 0, y: -1 },
@@ -33,7 +35,7 @@ export class MapWorker {
             this.playerMove++;
         }
 
-        if (15 === this.mobMove) {
+        if (20 === this.mobMove) {
             mapData = this.mobMover(mapData);
             this.mobMove = 0;
         } else {
@@ -42,7 +44,7 @@ export class MapWorker {
     }
 
     private mobMover(mapData: Array<IEntity>) {
-        const mobs = mapData.filter(x => x.type === EntityType.Mob);
+        const mobs = mapData.filter(x => x.type === EntityType.Mob || x.type === EntityType.Boss);
         const player = mapData.find(
             x => x.type === EntityType.Player);
         for (const mob of mobs) {
@@ -191,6 +193,26 @@ export class MapWorker {
             } else {
                 renderType = RenderType.MobDown1;
             }
+        } else if (entity.type === EntityType.Boss) {
+            if (direction.x === 0 && direction.y === 1) {
+                renderType = entity.renderType === RenderType.BossDown1 ? RenderType.BossDown2 :
+                    entity.renderType === RenderType.BossDown2 ? RenderType.BossDown3 :
+                        entity.renderType === RenderType.BossDown3 ? RenderType.BossDown1 : RenderType.BossDown1;
+            } else if (direction.x === 0 && direction.y === -1) {
+                renderType = entity.renderType === RenderType.BossUp1 ? RenderType.BossUp2 :
+                    entity.renderType === RenderType.BossUp2 ? RenderType.BossUp3 :
+                        entity.renderType === RenderType.BossUp3 ? RenderType.BossUp1 : RenderType.BossUp1;
+            } else if (direction.x === -1 && direction.y === 0) {
+                renderType = entity.renderType === RenderType.BossLeft1 ? RenderType.BossLeft2 :
+                    entity.renderType === RenderType.BossLeft2 ? RenderType.BossLeft3 :
+                        entity.renderType === RenderType.BossLeft3 ? RenderType.BossLeft1 : RenderType.BossLeft1;
+            } else if (direction.x === 1 && direction.y === 0) {
+                renderType = entity.renderType === RenderType.BossRight1 ? RenderType.BossRight2 :
+                    entity.renderType === RenderType.BossRight2 ? RenderType.BossRight3 :
+                        entity.renderType === RenderType.BossRight3 ? RenderType.BossRight1 : RenderType.BossRight1;
+            } else {
+                renderType = RenderType.BossDown1;
+            }
         } else {
             renderType = entity.renderType;
         }
@@ -240,7 +262,7 @@ export class MapWorker {
 
     private keyHandler(mapData: Array<IEntity>, lastKeyCode: string): Array<IEntity> {
         const player = mapData.find(x => x.type === EntityType.Player)!;
-        console.log(lastKeyCode);
+        //console.log(lastKeyCode);
         switch (lastKeyCode) {
             case 'KeyW': {
                 return this.entityMove(mapData, DIRECTIONS.UP, player.id);
@@ -273,17 +295,17 @@ export class MapWorker {
         const downItem = mapData.find(
             data => data.x === player.x && data.y === player.y + 1)!;
 
-        let attackedMob: IEntity | null = null;
+        let attackedMob: IMob | null = null;
         let openedChest: IEntity | null = null;
 
-        if (leftItem && leftItem.type === EntityType.Mob) {
-            attackedMob = leftItem;
-        } else if (upItem && upItem.type === EntityType.Mob) {
-            attackedMob = upItem;
-        } else if (rightItem && rightItem.type === EntityType.Mob) {
-            attackedMob = rightItem;
-        } else if (downItem && downItem.type === EntityType.Mob) {
-            attackedMob = downItem;
+        if (leftItem && (leftItem.type === EntityType.Mob || leftItem.type === EntityType.Boss)) {
+            attackedMob = leftItem as IMob;
+        } else if (upItem && (upItem.type === EntityType.Mob || upItem.type === EntityType.Boss)) {
+            attackedMob = upItem as IMob;
+        } else if (rightItem && (rightItem.type === EntityType.Mob || rightItem.type === EntityType.Boss)) {
+            attackedMob = rightItem as IMob;
+        } else if (downItem && (downItem.type === EntityType.Mob || downItem.type === EntityType.Boss)) {
+            attackedMob = downItem as IMob;
         } else {
             if (leftItem && leftItem.type === EntityType.Chest) {
                 openedChest = leftItem;
@@ -297,15 +319,14 @@ export class MapWorker {
         }
 
         if (attackedMob) {
-            (attackedMob as IMob).data.hp -= player.data.power;
-            mapData[mapData.findIndex(x => x.id === attackedMob!.id)].renderType = RenderType.RedMob;
+            attackedMob.data.hp -= player.data.power;
+            mapData[mapData.findIndex(x => x.id === attackedMob!.id)].renderType = attackedMob.type === EntityType.Boss ? RenderType.RedBoss : RenderType.RedMob;
         } else if (openedChest) {
             mapData[mapData.findIndex(x => x.id === openedChest!.id)].type = EntityType.Void;
             mapData[mapData.findIndex(x => x.id === openedChest!.id)].renderType = RenderType.Void;
             if (player.data.inventory.length < 6) {
-                const itemCreator = new ItemCreator();
-                player.data.inventory.push(itemCreator.create());
-                console.log(player);
+                player.data.inventory.push(ItemCreator.create());
+                //console.log(player);
             }
         }
 
@@ -329,8 +350,22 @@ export class MapWorker {
             if (redMob.data.hp <= 0) {
                 mapData[mapData.findIndex(x => x.id === redMob.id)].type = EntityType.Void;
                 mapData[mapData.findIndex(x => x.id === redMob.id)].renderType = RenderType.Void;
+                ls.killedMobs++;
             } else {
                 mapData[mapData.findIndex(x => x.id === redMob.id)].renderType = RenderType.MobDown1;
+            }
+        }
+        const redBosses = mapData.filter(x => x.renderType === RenderType.RedBoss) as Array<IMob>;
+        for (const redBoss of redBosses) {
+            if (redBoss.data.hp <= 0) {
+                mapData[mapData.findIndex(x => x.id === redBoss.id)].type = EntityType.Void;
+                mapData[mapData.findIndex(x => x.id === redBoss.id)].renderType = RenderType.Void;
+                ls.killedMobs++;
+                if ((mapData[mapData.findIndex(x => x.type === EntityType.Player)] as IPlayer).data.inventory.length < 6) {
+                    (mapData[mapData.findIndex(x => x.type === EntityType.Player)] as IPlayer).data.inventory.push(ItemCreator.create(ItemType.Scroll));
+                }
+            } else {
+                mapData[mapData.findIndex(x => x.id === redBoss.id)].renderType = RenderType.BossDown1;
             }
         }
         return mapData;

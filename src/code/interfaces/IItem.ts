@@ -1,4 +1,4 @@
-import {ItemType} from "../common/ItemEnum";
+import {ItemType} from "../enums/ItemEnum";
 import {IPlayer} from "./IPlayer";
 
 

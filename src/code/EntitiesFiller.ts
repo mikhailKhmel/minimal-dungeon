@@ -1,5 +1,5 @@
 import {calcLightZone} from "../utils";
-import {EntityType} from "./common/EntityEnum";
+import {EntityType} from "./enums/EntityEnum";
 import {EntityCreator} from "./EntityCreator";
 import {Player} from "./implements/Player";
 import {IEntity} from "./interfaces/IEntity";
@@ -25,8 +25,7 @@ export class EntitiesFiller {
         for (let i = 0; i < maps.length; i++) {
             for (let j = 0; j < maps[i].length; j++) {
                 const mapItem = maps[i][j];
-                const entityCreator = new EntityCreator(parseInt(mapItem), i, j, level);
-                this.data.push(entityCreator.CreateEntity());
+                this.data.push(EntityCreator.create(parseInt(mapItem), i, j, level));
             }
         }
     }

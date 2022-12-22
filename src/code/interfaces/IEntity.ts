@@ -1,5 +1,5 @@
-import {EntityType} from "../common/EntityEnum";
-import {RenderType} from "../common/RenderEnum";
+import {EntityType} from "../enums/EntityEnum";
+import {RenderType} from "../enums/RenderEnum";
 
 export interface IEntity {
     id: string,
