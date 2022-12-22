@@ -18,6 +18,6 @@ export class Player implements IPlayer {
         this.id = uuid();
         this.x = x;
         this.y = y;
-        this.data = {hp: 10, power: 1, armor: 0, inventory: []};
+        this.data = {hp: 20, power: 1, armor: 0, inventory: []};
     }
 }
