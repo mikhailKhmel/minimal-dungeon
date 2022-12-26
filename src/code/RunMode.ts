@@ -1,7 +1,7 @@
 import { EntityType } from './enums/EntityEnum';
 import { FPS, GameModes, HEIGHT, WIDTH } from './Constants';
 import { EntitiesFiller } from './EntitiesFiller';
-import { Player } from './implements/Player';
+import { Player } from './implements/entities/Player';
 import { IEntity } from './interfaces/IEntity';
 import { MapGenerator } from './MapGenerator';
 import { MapWorker } from './MapWorker';

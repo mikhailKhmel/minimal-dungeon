@@ -5,7 +5,7 @@ export const MAP_SIZE = 50;
 export const FPS = 120;
 
 export enum GameModes {
-    START,
-    RUN,
-    GAMEOVER
+  START,
+  RUN,
+  GAMEOVER,
 }

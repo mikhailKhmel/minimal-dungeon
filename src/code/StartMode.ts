@@ -1,16 +1,16 @@
-import {GameModes} from "./Constants";
+import { GameModes } from './Constants';
 
 export class StartMode {
-    changeMode: ((mode: GameModes) => void) | null = null;
+  changeMode: ((mode: GameModes) => void) | null = null;
 
-    constructor(changeMode: (mode: GameModes) => void) {
-        this.changeMode = changeMode;
-    }
+  constructor(changeMode: (mode: GameModes) => void) {
+    this.changeMode = changeMode;
+  }
 
-    show(): void {
-        const app = document.getElementById('app');
-        if (!app) return;
-        app.innerHTML = `
+  show(): void {
+    const app = document.getElementById('app');
+    if (!app) return;
+    app.innerHTML = `
         <div class="container mt-2">
         <div class="row justify-content-center align-items-center">
             <div class="col-auto mb-3 text-center" style="width: 25rem;">
@@ -49,9 +49,9 @@ export class StartMode {
             </div>
         </div>
     </div>`;
-        document.getElementById('start-btn')?.addEventListener('click', () => {
-            if (!this.changeMode) return;
-            this.changeMode(GameModes.RUN);
-        });
-    }
+    document.getElementById('start-btn')?.addEventListener('click', () => {
+      if (!this.changeMode) return;
+      this.changeMode(GameModes.RUN);
+    });
+  }
 }

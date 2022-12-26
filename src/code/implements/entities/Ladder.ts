@@ -1,7 +1,6 @@
-import { EntityType } from '../enums/EntityEnum';
-import { IEntity } from '../interfaces/IEntity';
-import { v4 as uuid } from 'uuid';
-import { RenderType } from '../enums/RenderEnum';
+import { EntityType } from '../../enums/EntityEnum';
+import { IEntity } from '../../interfaces/IEntity';
+import { RenderType } from '../../enums/RenderEnum';
 
 export class Ladder implements IEntity {
   id: string;
@@ -12,7 +11,7 @@ export class Ladder implements IEntity {
   light = false;
 
   constructor(x: number, y: number) {
-    this.id = uuid();
+    this.id = crypto.randomUUID();
     this.x = x;
     this.y = y;
   }
