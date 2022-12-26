@@ -13,7 +13,7 @@ export class Render {
   chests: HTMLElement | null = null;
   mobs: HTMLElement | null = null;
   hp: HTMLElement | null = null;
-  armory: HTMLElement | null = null;
+  armor: HTMLElement | null = null;
   power: HTMLElement | null = null;
 
   public loadInfo() {
@@ -21,7 +21,7 @@ export class Render {
     this.chests = document.getElementById('chests');
     this.mobs = document.getElementById('mobs');
     this.hp = document.getElementById('hp');
-    this.armory = document.getElementById('armory');
+    this.armor = document.getElementById('armor');
     this.power = document.getElementById('power');
   }
 
@@ -140,18 +140,18 @@ export class Render {
     chests: number,
     mobs: number,
   ) {
-    if (!this.level || !this.chests || !this.mobs || !this.hp || !this.armory || !this.power) return;
+    if (!this.level || !this.chests || !this.mobs || !this.hp || !this.armor || !this.power) return;
 
     this.level.innerText = level.toString();
     this.chests.innerText = chests.toString();
     this.mobs.innerText = mobs.toString();
     this.hp.innerText = playerData.hp.toString();
-    this.armory.innerText = playerData.armor.toString();
+    this.armor.innerText = playerData.armor.toString();
     this.power.innerText = playerData.power.toString();
 
-    for (let index = 0; index < 6; index++) {
+    for (let index = 0; index < 9; index++) {
       let path: string | null = '';
-      const inv = document.getElementById(`inv-${index + 1}`) as HTMLImageElement;
+      const inv = document.getElementById(`inv-img-${index + 1}`) as HTMLImageElement;
       const item = playerData.inventory[index];
       if (item) {
         switch (item.type) {

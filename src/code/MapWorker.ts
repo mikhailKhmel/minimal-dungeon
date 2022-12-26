@@ -326,7 +326,7 @@ export class MapWorker {
         } else if (openedChest) {
             mapData[mapData.findIndex(x => x.id === openedChest?.id)].type = EntityType.Void;
             mapData[mapData.findIndex(x => x.id === openedChest?.id)].renderType = RenderType.Void;
-            if (player.data.inventory.length < 6) {
+            if (player.data.inventory.length < 9) {
                 player.data.inventory.push(ItemCreator.create());
                 //console.log(player);
             }
@@ -363,7 +363,7 @@ export class MapWorker {
                 mapData[mapData.findIndex(x => x.id === redBoss.id)].type = EntityType.Void;
                 mapData[mapData.findIndex(x => x.id === redBoss.id)].renderType = RenderType.Void;
                 ls.killedMobs++;
-                if ((mapData[mapData.findIndex(x => x.type === EntityType.Player)] as IPlayer).data.inventory.length < 6) {
+                if ((mapData[mapData.findIndex(x => x.type === EntityType.Player)] as IPlayer).data.inventory.length < 9) {
                     (mapData[mapData.findIndex(x => x.type === EntityType.Player)] as IPlayer).data.inventory.push(ItemCreator.create(ItemType.Scroll));
                 }
             } else {
