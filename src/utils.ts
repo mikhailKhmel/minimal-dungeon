@@ -19,7 +19,7 @@ export function sleep(ms: number): Promise<void> {
 
 export function loadImage(url: string): Promise<HTMLImageElement> {
     return new Promise(r => {
-        let i = new Image();
+        const i = new Image();
         i.onload = (() => r(i));
         i.src = url;
     });
@@ -44,7 +44,11 @@ export function calculateMobAttack(player: IPlayer, mob: IMob): IPlayer {
 }
 
 export function calcLightZone(data: Array<IEntity>): Array<IEntity> {
-    const player = data.find(x => x.type === EntityType.Player)!;
+    const player = data.find(x => x.type === EntityType.Player);
+    if (player === undefined) {
+        return [];
+    }
+    
     const x1 = player.x - 3;
     const x2 = player.x + 3;
     const y1 = player.y - 3;

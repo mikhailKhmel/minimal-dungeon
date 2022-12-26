@@ -1,11 +1,11 @@
 import {v4} from "uuid";
-import { randint } from "../../utils";
+import {randint} from "../../utils";
 import {ItemType} from "../enums/ItemEnum";
 import {IItem} from "../interfaces/IItem";
 import {IPlayer} from "../interfaces/IPlayer";
 
 export class Potion implements IItem {
-    id: string = '';
+    id = '';
     type: ItemType = ItemType.Potion;
 
     constructor() {
@@ -15,7 +15,7 @@ export class Potion implements IItem {
     do(player: IPlayer) {
         player.data.hp += randint(1, 3);
         return player;
-    };
+    }
 
 
 }

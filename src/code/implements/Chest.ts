@@ -10,7 +10,7 @@ export class Chest implements IEntity {
     y: number;
     type: EntityType = EntityType.Chest;
     renderType: RenderType = RenderType.Chest;
-    light: Boolean = false;
+    light = false;
 
     constructor(x: number, y: number) {
         this.id = uuid();

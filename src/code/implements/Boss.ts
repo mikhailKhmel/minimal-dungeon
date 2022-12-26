@@ -12,7 +12,7 @@ export class Boss implements IMob {
     type: EntityType = EntityType.Boss;
     renderType: RenderType = RenderType.BossDown1;
     data: { hp: number; power: number; };
-    light: Boolean = false;
+    light = false;
 
     constructor(x: number, y: number, level: number) {
         this.id = uuid();

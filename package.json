@@ -6,10 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "npx eslint ./src",
+    "format": "npx eslint ./src --fix"
   },
   "devDependencies": {
     "@types/uuid": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.30.0",
+    "prettier": "^2.8.1",
     "typescript": "^4.6.4",
     "vite": "^3.2.3"
   },

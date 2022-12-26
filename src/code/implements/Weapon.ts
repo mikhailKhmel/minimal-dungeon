@@ -4,7 +4,7 @@ import {IItem} from "../interfaces/IItem";
 import {IPlayer} from "../interfaces/IPlayer";
 
 export class Weapon implements IItem {
-    id: string = '';
+    id = '';
     type: ItemType = ItemType.Weapon;
 
     constructor() {
@@ -14,5 +14,5 @@ export class Weapon implements IItem {
     do(player: IPlayer) {
         player.data.power += 1;
         return player;
-    };
+    }
 }

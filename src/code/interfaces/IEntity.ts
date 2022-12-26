@@ -7,5 +7,5 @@ export interface IEntity {
     y: number,
     type: EntityType,
     renderType: RenderType,
-    light: Boolean
+    light: boolean
 }

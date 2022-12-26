@@ -11,7 +11,7 @@ export class Void implements IEntity {
     y: number;
     type: EntityType = EntityType.Void;
     renderType: RenderType;
-    light: Boolean = false;
+    light = false;
 
     constructor(x: number, y: number) {
         this.id = uuid();

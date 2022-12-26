@@ -43,7 +43,7 @@ export class MapGenerator {
     }
 
     private spawnChests() {
-        let chestCount = randint(this.rooms.length, this.rooms.length + 2);
+        const chestCount = randint(this.rooms.length, this.rooms.length + 2);
         let c = 0
         while (c < chestCount) {
             if (this.maps && this.maps.length !== 0) {
@@ -59,7 +59,7 @@ export class MapGenerator {
     }
 
     private spawnLadder() {
-        let c: number = 0;
+        let c = 0;
         while (c < 1) {
             if (this.maps && this.maps.length !== 0) {
                 const rndRoom = this.rooms[randint(0, this.rooms.length - 1)];
@@ -141,7 +141,7 @@ export class MapGenerator {
             const newRoom = new Room(x1, x2, y1, y2);
             let failed = false;
 
-            for (let r of this.rooms) {
+            for (const r of this.rooms) {
                 if (this.checkIntersection(r, newRoom)) {
                     failed = true;
                     break;

@@ -12,7 +12,7 @@ export class Mob implements IMob {
     type: EntityType = EntityType.Mob;
     renderType: RenderType = RenderType.MobDown1;
     data: { hp: number; power: number; };
-    light: Boolean = false;
+    light = false;
 
     constructor(x: number, y: number, level: number) {
         this.id = uuid();

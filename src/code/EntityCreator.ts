@@ -1,12 +1,12 @@
-import { EntityType } from "./enums/EntityEnum";
-import { Boss } from "./implements/Boss";
-import { Chest } from "./implements/Chest";
-import { Ladder } from "./implements/Ladder";
-import { Mob } from "./implements/Mob";
-import { Player } from "./implements/Player";
-import { Void } from "./implements/Void";
-import { Wall } from "./implements/Wall";
-import { IEntity } from "./interfaces/IEntity";
+import {EntityType} from "./enums/EntityEnum";
+import {Boss} from "./implements/Boss";
+import {Chest} from "./implements/Chest";
+import {Ladder} from "./implements/Ladder";
+import {Mob} from "./implements/Mob";
+import {Player} from "./implements/Player";
+import {Void} from "./implements/Void";
+import {Wall} from "./implements/Wall";
+import {IEntity} from "./interfaces/IEntity";
 
 export class EntityCreator {
 

@@ -5,7 +5,7 @@ import {IPlayer} from "../interfaces/IPlayer";
 import ls from "../localstorage";
 
 export class Scroll implements IItem {
-    id: string = '';
+    id = '';
     type: ItemType = ItemType.Scroll;
 
     constructor() {
@@ -18,7 +18,7 @@ export class Scroll implements IItem {
             ls.allVisible = false;
         }, 1000 * 10);
         return player;
-    };
+    }
 
 
 }

@@ -1,12 +1,13 @@
-import { GameModes } from "./code/Constants";
-import { StartMode } from "./code/StartMode";
-import { RunMode } from "./code/RunMode";
-import { GameOverMode } from "./code/GameOverMode";
-import { Render } from "./code/Render";
+import {GameModes} from "./code/Constants";
+import {StartMode} from "./code/StartMode";
+import {RunMode} from "./code/RunMode";
+import {GameOverMode} from "./code/GameOverMode";
+import {Render} from "./code/Render";
 
 export class Game {
     mode: GameModes = GameModes.START;
     render: Render | null = null;
+
     constructor(render: Render) {
         this.render = render;
     }
@@ -19,7 +20,10 @@ export class Game {
                 break;
             }
             case GameModes.RUN: {
-                const runMode = new RunMode(this.changeMode.bind(this), this.render!);
+                if (!this.render) {
+                    return;
+                }
+                const runMode = new RunMode(this.changeMode.bind(this), this.render);
                 runMode.show()
                     .then(() => {
                         runMode.go();

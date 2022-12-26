@@ -11,7 +11,7 @@ export class Wall implements IEntity {
     y: number;
     type: EntityType = EntityType.Wall;
     renderType: RenderType;
-    light: Boolean = false;
+    light = false;
 
     constructor(x: number, y: number) {
         this.id = uuid();

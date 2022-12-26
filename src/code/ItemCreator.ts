@@ -1,10 +1,10 @@
-import { randint } from "../utils";
-import { ItemType } from "./enums/ItemEnum";
-import { Armor } from "./implements/Armor";
-import { Potion } from "./implements/Potion";
-import { Scroll } from "./implements/Scroll";
-import { Weapon } from "./implements/Weapon";
-import { IItem } from "./interfaces/IItem";
+import {randint} from "../utils";
+import {ItemType} from "./enums/ItemEnum";
+import {Armor} from "./implements/Armor";
+import {Potion} from "./implements/Potion";
+import {Scroll} from "./implements/Scroll";
+import {Weapon} from "./implements/Weapon";
+import {IItem} from "./interfaces/IItem";
 
 export class ItemCreator {
     static create(type: ItemType | null = null): IItem {

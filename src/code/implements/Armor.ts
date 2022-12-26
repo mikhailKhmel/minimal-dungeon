@@ -4,7 +4,7 @@ import {IItem} from "../interfaces/IItem";
 import {IPlayer} from "../interfaces/IPlayer";
 
 export class Armor implements IItem {
-    id: string = '';
+    id = '';
     type: ItemType = ItemType.Armor;
 
     constructor() {
@@ -14,5 +14,5 @@ export class Armor implements IItem {
     do(player: IPlayer) {
         player.data.armor += 1;
         return player;
-    };
+    }
 }

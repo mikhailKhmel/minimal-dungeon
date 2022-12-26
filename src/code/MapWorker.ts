@@ -16,10 +16,10 @@ const DIRECTIONS = {
 };
 
 export class MapWorker {
-    isNewLevel: Boolean = false;
-    gameOver: Boolean = false;
-    mobMove: number = 0;
-    playerMove: number = 0;
+    isNewLevel = false;
+    gameOver = false;
+    mobMove = 0;
+    playerMove = 0;
 
     public go(mapData: Array<IEntity>, lastKeyCode: string) {
         mapData = this.playerAttackCleaner(mapData);
@@ -30,8 +30,7 @@ export class MapWorker {
             this.playerMove = 0;
         } else if (lastKeyCode === 'KeyE') {
             mapData = this.keyHandler(mapData, lastKeyCode);
-        }
-        else {
+        } else {
             this.playerMove++;
         }
 
@@ -80,32 +79,32 @@ export class MapWorker {
                 const diffX = Math.abs(player.x - mob.x);
                 const diffY = Math.abs(player.y - mob.y);
 
-                let x: number = 0, y: number = 0;
+                let x = 0, y = 0;
 
-                let futurePlaces = [];
+                let futurePlaces: Array<{ direction: { x: number, y: number }, place: IEntity | null }> = [];
                 futurePlaces.push({
                     direction: DIRECTIONS.UP, place: mapData.find(
                         x => x.x === mob.x + DIRECTIONS.UP.x && x.y === mob.y +
-                            DIRECTIONS.UP.y),
+                            DIRECTIONS.UP.y) ?? null,
                 });
                 futurePlaces.push({
                     direction: DIRECTIONS.LEFT, place: mapData.find(
                         x => x.x === mob.x + DIRECTIONS.LEFT.x && x.y === mob.y +
-                            DIRECTIONS.LEFT.y),
+                            DIRECTIONS.LEFT.y) ?? null,
                 });
                 futurePlaces.push({
                     direction: DIRECTIONS.RIGHT,
                     place: mapData.find(
                         x => x.x === mob.x + DIRECTIONS.RIGHT.x && x.y === mob.y +
-                            DIRECTIONS.RIGHT.y),
+                            DIRECTIONS.RIGHT.y) ?? null,
                 });
                 futurePlaces.push({
                     direction: DIRECTIONS.DOWN,
                     place: mapData.find(
                         x => x.x === mob.x + DIRECTIONS.DOWN.x && x.y === mob.y +
-                            DIRECTIONS.DOWN.y),
+                            DIRECTIONS.DOWN.y) ?? null,
                 });
-                futurePlaces = futurePlaces.filter(x => x.place!.type === EntityType.Void);
+                futurePlaces = futurePlaces.filter(x => x.place && x.place.type === EntityType.Void);
 
                 for (const futurePlace of futurePlaces) {
                     const newDiffX = Math.abs(
@@ -121,7 +120,7 @@ export class MapWorker {
                 }
                 return { x, y };
             } else {
-                let x = randint(-1, 1);
+                const x = randint(-1, 1);
                 let y: number;
                 if (x === -1 || x === 1) {
                     y = 0;
@@ -131,8 +130,8 @@ export class MapWorker {
                     y = randint(-1, 1);
                 }
                 const futurePlace = mapData.find(
-                    data => data.x === mob.x + x && data.y === mob.y + y)!;
-                if (futurePlace.type === EntityType.Void) {
+                    data => data.x === mob.x + x && data.y === mob.y + y) ?? null;
+                if (futurePlace && futurePlace.type === EntityType.Void) {
                     return { x, y };
                 } else {
                     return { x: 0, y: 0 };
@@ -229,7 +228,7 @@ export class MapWorker {
             data => data.x === futureX && data.y === futureY);
         const futurePlace = { ...mapData[futurePlaceIndex] };
 
-        let renderType: RenderType = this.chooseRenderType(entity, direction);
+        const renderType: RenderType = this.chooseRenderType(entity, direction);
 
 
         if (futurePlaceIndex !== -1) {
@@ -261,7 +260,10 @@ export class MapWorker {
     }
 
     private keyHandler(mapData: Array<IEntity>, lastKeyCode: string): Array<IEntity> {
-        const player = mapData.find(x => x.type === EntityType.Player)!;
+        const player = mapData.find(x => x.type === EntityType.Player) ?? null;
+        if (!player) {
+            return [];
+        }
         //console.log(lastKeyCode);
         switch (lastKeyCode) {
             case 'KeyW': {
@@ -287,13 +289,13 @@ export class MapWorker {
 
     private playerAttack(mapData: Array<IEntity>, player: IPlayer) {
         const leftItem = mapData.find(
-            data => data.x === player.x - 1 && data.y === player.y)!;
+            data => data.x === player.x - 1 && data.y === player.y) ?? null;
         const upItem = mapData.find(
-            data => data.x === player.x && data.y === player.y - 1)!;
+            data => data.x === player.x && data.y === player.y - 1) ?? null;
         const rightItem = mapData.find(
-            data => data.x === player.x + 1 && data.y === player.y)!;
+            data => data.x === player.x + 1 && data.y === player.y) ?? null;
         const downItem = mapData.find(
-            data => data.x === player.x && data.y === player.y + 1)!;
+            data => data.x === player.x && data.y === player.y + 1) ?? null;
 
         let attackedMob: IMob | null = null;
         let openedChest: IEntity | null = null;
@@ -320,10 +322,10 @@ export class MapWorker {
 
         if (attackedMob) {
             attackedMob.data.hp -= player.data.power;
-            mapData[mapData.findIndex(x => x.id === attackedMob!.id)].renderType = attackedMob.type === EntityType.Boss ? RenderType.RedBoss : RenderType.RedMob;
+            mapData[mapData.findIndex(x => x.id === attackedMob?.id)].renderType = attackedMob.type === EntityType.Boss ? RenderType.RedBoss : RenderType.RedMob;
         } else if (openedChest) {
-            mapData[mapData.findIndex(x => x.id === openedChest!.id)].type = EntityType.Void;
-            mapData[mapData.findIndex(x => x.id === openedChest!.id)].renderType = RenderType.Void;
+            mapData[mapData.findIndex(x => x.id === openedChest?.id)].type = EntityType.Void;
+            mapData[mapData.findIndex(x => x.id === openedChest?.id)].renderType = RenderType.Void;
             if (player.data.inventory.length < 6) {
                 player.data.inventory.push(ItemCreator.create());
                 //console.log(player);

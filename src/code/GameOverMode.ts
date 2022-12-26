@@ -1,16 +1,18 @@
-import {GameModes} from "./Constants";
-import ls from "./localstorage";
+import { GameModes } from './Constants';
+import ls from './localstorage';
 
 export class GameOverMode {
-    changeMode: Function | null = null;
+  changeMode: ((mode: GameModes) => void) | null = null;
 
-    constructor(changeMode: Function) {
-        this.changeMode = changeMode;
-    }
+  constructor(changeMode: (mode: GameModes) => void) {
+    this.changeMode = changeMode;
+  }
 
-    show(): void {
-        const mobsWord = ls.killedMobs === 1 ? 'монстра' : 'монстров';
-        document.getElementById('app')!.innerHTML = `
+  show(): void {
+    const mobsWord = ls.killedMobs === 1 ? 'монстра' : 'монстров';
+    const app = document.getElementById('app');
+    if (!app) return;
+    app.innerHTML = `
         <div class="d-flex justify-content-center mt-2">
             <div class="card text-white bg-danger mb-3" style="max-width: 20rem;">
                 <div class="card-body">
@@ -20,8 +22,9 @@ export class GameOverMode {
                 </div>
             </div>
         </div>`;
-        document.getElementById('btn-restart')?.addEventListener('click', () => {
-            this.changeMode!(GameModes.RUN);
-        });
-    }
+    document.getElementById('btn-restart')?.addEventListener('click', () => {
+      if (!this.changeMode) return;
+      this.changeMode(GameModes.RUN);
+    });
+  }
 }

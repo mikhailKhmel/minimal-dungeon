@@ -1,13 +1,13 @@
-import { EntityType } from "./enums/EntityEnum";
-import { FPS, GameModes, HEIGHT, WIDTH } from "./Constants";
-import { EntitiesFiller } from "./EntitiesFiller";
-import { Player } from "./implements/Player";
-import { IEntity } from "./interfaces/IEntity";
-import { MapGenerator } from "./MapGenerator";
-import { MapWorker } from "./MapWorker";
-import { Render } from "./Render";
-import { tick } from "../utils";
-import { IPlayer } from "./interfaces/IPlayer";
+import {EntityType} from "./enums/EntityEnum";
+import {FPS, GameModes, HEIGHT, WIDTH} from "./Constants";
+import {EntitiesFiller} from "./EntitiesFiller";
+import {Player} from "./implements/Player";
+import {IEntity} from "./interfaces/IEntity";
+import {MapGenerator} from "./MapGenerator";
+import {MapWorker} from "./MapWorker";
+import {Render} from "./Render";
+import {tick} from "../utils";
+import {IPlayer} from "./interfaces/IPlayer";
 import ls from "./localstorage";
 
 export class RunMode {
@@ -17,13 +17,12 @@ export class RunMode {
     render: Render | null = null;
     mapWorker: MapWorker;
     mapData: Array<IEntity> = [];
-    lastKeyCode: string = '';
-    level: number = 1;
-    changeMode: Function | null = null;
-    pause: Boolean = false;
+    lastKeyCode = '';
+    level = 1;
+    changeMode: ((mode: GameModes) => void) | null = null;
+    pause = false;
 
-    constructor(changeMode: Function, render: Render) {
-
+    constructor(changeMode: (mode: GameModes) => void, render: Render) {
         this.entitiesGenerator = new EntitiesFiller();
         this.mapGenerator = new MapGenerator();
         this.mapWorker = new MapWorker();
@@ -38,7 +37,11 @@ export class RunMode {
     }
 
     async show(): Promise<void> {
-        document.getElementById('app')!.innerHTML = `
+        const app = document.getElementById('app');
+        if (app === null) {
+            return;
+        }
+        app.innerHTML = `
         <div class="container-xl mt-2">
         <div class="row">
             <div class="col-8">
@@ -162,7 +165,7 @@ export class RunMode {
                 </div>
             </div>
         </div>
-        `;
+        ` ?? '';
         const game = document.getElementById('game') as HTMLCanvasElement;
         game.width = WIDTH;
         game.height = HEIGHT;
@@ -176,7 +179,7 @@ export class RunMode {
 
     applyItem(invIndex: number) {
         let player = this.mapData.find(x => x.type === EntityType.Player) as IPlayer;
-        let inv = player.data.inventory;
+        const inv = player.data.inventory;
         if (inv[invIndex]) {
             player = inv[invIndex].do(player);
             player.data.inventory = inv.filter((item) => item.id !== inv[invIndex].id);
@@ -184,6 +187,8 @@ export class RunMode {
     }
 
     public async go(): Promise<void> {
+        
+
         document.getElementById('inv-1')?.addEventListener('click', () => {
             this.applyItem(0);
         });
@@ -204,28 +209,33 @@ export class RunMode {
         });
         document.getElementById('pause-btn')?.addEventListener('click', () => {
             this.pause = !this.pause;
-            document.getElementById('pause-btn')!.innerText = this.pause ? 'ПРОДОЛЖИТЬ' : 'ПАУЗА';
+            const pauseBtn = document.getElementById('pause-btn');
+            if (pauseBtn === null) return;
+            pauseBtn.innerText = this.pause ? 'ПРОДОЛЖИТЬ' : 'ПАУЗА';
         });
         this.createMap();
 
         const interval = setInterval(() => {
+            if (this.render === null || this.context === null || this.changeMode === null) {
+                return;
+            }
             if (!this.pause) {
-                this.render!.renderMap(this.context!, this.mapData);
-                this.render!.renderInfo(
+                this.render?.renderMap(this.context, this.mapData);
+                this.render?.renderInfo(
                     (this.mapData.find(x => x.type === EntityType.Player) as Player).data, this.level,
                     this.mapData.filter(x => x.type === EntityType.Chest).length, this.mapData.filter(x => x.type === EntityType.Mob).length);
                 this.mapWorker.go(this.mapData, this.lastKeyCode);
                 this.lastKeyCode = '';
 
                 if (this.mapWorker.gameOver) {
-                    this.changeMode!(GameModes.GAMEOVER);
+                    this.changeMode(GameModes.GAMEOVER);
                     clearInterval(interval);
                 }
 
                 if (this.mapWorker.isNewLevel) {
                     this.mapWorker.isNewLevel = false;
                     this.level++;
-                    this.context!.fillRect(0, 0, WIDTH, HEIGHT);
+                    this.context?.fillRect(0, 0, WIDTH, HEIGHT);
                     this.createMap();
                 }
             }

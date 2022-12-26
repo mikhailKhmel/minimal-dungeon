@@ -12,7 +12,7 @@ export class Player implements IPlayer {
     type: EntityType = EntityType.Player;
     renderType: RenderType = RenderType.PlayerDown1;
     data: { hp: number; power: number; armor: number; inventory: Array<IItem> };
-    light: Boolean = false;
+    light = false;
 
     constructor(x: number, y: number) {
         this.id = uuid();
