@@ -2,7 +2,7 @@ import { ItemType } from '../../enums/ItemType';
 import { RenderType } from '../../enums/RenderType';
 import { IItem } from '../../interfaces/IItem';
 import { IPlayer } from '../../interfaces/IPlayer';
-import ls from '../../localstorage';
+import ls from '../../LocalStorage';
 
 export class Scroll implements IItem {
   id = '';

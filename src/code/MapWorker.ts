@@ -6,7 +6,7 @@ import { IEntity } from './interfaces/IEntity';
 import { IMob } from './interfaces/IMob';
 import { IPlayer } from './interfaces/IPlayer';
 import { ItemCreator } from './ItemCreator';
-import ls from './localstorage';
+import ls from './LocalStorage';
 
 const DIRECTIONS = {
   UP: { x: 0, y: -1 },

@@ -8,7 +8,7 @@ import { MapWorker } from './MapWorker';
 import { Render } from './Render';
 import { tick } from '../utils';
 import { IPlayer } from './interfaces/IPlayer';
-import ls from './localstorage';
+import ls from './LocalStorage';
 import { EquipmentType } from './enums/EquipmentType';
 import { ItemType } from './enums/ItemType';
 import { IArmor } from './interfaces/IArmor';

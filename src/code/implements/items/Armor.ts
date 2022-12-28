@@ -4,7 +4,7 @@ import { ItemType } from '../../enums/ItemType';
 import { RenderType } from '../../enums/RenderType';
 import { IArmor } from '../../interfaces/IArmor';
 import { IPlayer } from '../../interfaces/IPlayer';
-import ls from '../../localstorage';
+import ls from '../../LocalStorage';
 
 export class Armor implements IArmor {
   id = '';

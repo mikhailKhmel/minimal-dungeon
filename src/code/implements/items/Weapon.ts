@@ -4,7 +4,7 @@ import { ItemType } from '../../enums/ItemType';
 import { RenderType } from '../../enums/RenderType';
 import { IPlayer } from '../../interfaces/IPlayer';
 import { IWeapon } from '../../interfaces/IWeapon';
-import ls from '../../localstorage';
+import ls from '../../LocalStorage';
 
 export class Weapon implements IWeapon {
   id = '';

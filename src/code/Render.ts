@@ -4,7 +4,7 @@ import { ItemType } from './enums/ItemType';
 import { RenderType } from './enums/RenderType';
 import { HEIGHT, IMG_SIZE, WIDTH } from './Constants';
 import { IEntity } from './interfaces/IEntity';
-import ls from './localstorage';
+import ls from './LocalStorage';
 import { IArmor } from './interfaces/IArmor';
 import { IWeapon } from './interfaces/IWeapon';
 import { IPlayer } from './interfaces/IPlayer';
