@@ -1,7 +1,7 @@
 import { calcLightZone, calculateMobAttack, randchoose, randint } from '../utils';
-import { EntityType } from './enums/EntityEnum';
-import { ItemType } from './enums/ItemEnum';
-import { RenderType } from './enums/RenderEnum';
+import { EntityType } from './enums/EntityType';
+import { ItemType } from './enums/ItemType';
+import { RenderType } from './enums/RenderType';
 import { IEntity } from './interfaces/IEntity';
 import { IMob } from './interfaces/IMob';
 import { IPlayer } from './interfaces/IPlayer';

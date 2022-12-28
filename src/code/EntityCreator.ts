@@ -1,4 +1,4 @@
-import { EntityType } from './enums/EntityEnum';
+import { EntityType } from './enums/EntityType';
 import { Boss } from './implements/entities/Boss';
 import { Chest } from './implements/entities/Chest';
 import { Ladder } from './implements/entities/Ladder';

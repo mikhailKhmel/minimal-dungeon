@@ -1,6 +1,6 @@
-import { EntityType } from '../../enums/EntityEnum';
+import { EntityType } from '../../enums/EntityType';
 import { IEntity } from '../../interfaces/IEntity';
-import { RenderType } from '../../enums/RenderEnum';
+import { RenderType } from '../../enums/RenderType';
 import { randchoose } from '../../../utils';
 
 export class Wall implements IEntity {

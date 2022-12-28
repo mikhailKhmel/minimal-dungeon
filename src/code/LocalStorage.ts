@@ -19,6 +19,14 @@ class LocalStorage {
   set allVisible(value: boolean) {
     this._allVisible = value;
   }
+
+  private _level = 1;
+  get level(): number {
+    return this._level;
+  }
+  set level(value: number) {
+    this._level = value;
+  }
 }
 
 const ls = new LocalStorage();

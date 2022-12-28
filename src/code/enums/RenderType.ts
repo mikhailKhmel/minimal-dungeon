@@ -1,7 +1,4 @@
 export enum RenderType {
-  Potion,
-  Weapon,
-  Armory,
   Void,
   Void1,
   Void2,
@@ -50,4 +47,10 @@ export enum RenderType {
   RedPlayer,
   RedMob,
   Scroll,
+  Potion,
+  Head,
+  Body,
+  Legs,
+  LeftHand,
+  RightHand,
 }

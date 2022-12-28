@@ -1,7 +1,7 @@
-import { EntityType } from '../../enums/EntityEnum';
+import { EntityType } from '../../enums/EntityType';
 import { IMob } from '../../interfaces/IMob';
 import { randint } from '../../../utils';
-import { RenderType } from '../../enums/RenderEnum';
+import { RenderType } from '../../enums/RenderType';
 
 export class Boss implements IMob {
   id: string;

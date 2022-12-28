@@ -1,4 +1,4 @@
-import { EntityType } from './code/enums/EntityEnum';
+import { EntityType } from './code/enums/EntityType';
 import { IEntity } from './code/interfaces/IEntity';
 import { IMob } from './code/interfaces/IMob';
 import { IPlayer } from './code/interfaces/IPlayer';

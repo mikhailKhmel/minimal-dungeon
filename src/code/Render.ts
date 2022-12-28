@@ -1,11 +1,14 @@
 import { loadImage } from '../utils';
-import { EntityType } from './enums/EntityEnum';
-import { ItemType } from './enums/ItemEnum';
-import { RenderType } from './enums/RenderEnum';
+import { EntityType } from './enums/EntityType';
+import { ItemType } from './enums/ItemType';
+import { RenderType } from './enums/RenderType';
 import { HEIGHT, IMG_SIZE, WIDTH } from './Constants';
 import { IEntity } from './interfaces/IEntity';
-import { IItem } from './interfaces/IItem';
 import ls from './localstorage';
+import { IArmor } from './interfaces/IArmor';
+import { IWeapon } from './interfaces/IWeapon';
+import { IPlayer } from './interfaces/IPlayer';
+import { EquipmentType } from './enums/EquipmentType';
 
 export class Render {
   assets: Array<{ path: string; src: HTMLImageElement; type: RenderType }> = [];
@@ -28,6 +31,31 @@ export class Render {
   public async loadAssets() {
     this.assets = [
       {
+        path: '../assets/inv/head.png',
+        src: await loadImage('../assets/inv/head.png'),
+        type: RenderType.Head,
+      },
+      {
+        path: '../assets/inv/body.png',
+        src: await loadImage('../assets/inv/body.png'),
+        type: RenderType.Body,
+      },
+      {
+        path: '../assets/inv/legs.png',
+        src: await loadImage('../assets/inv/legs.png'),
+        type: RenderType.Legs,
+      },
+      {
+        path: '../assets/inv/lefthand.png',
+        src: await loadImage('../assets/inv/lefthand.png'),
+        type: RenderType.LeftHand,
+      },
+      {
+        path: '../assets/inv/righthand.png',
+        src: await loadImage('../assets/inv/righthand.png'),
+        type: RenderType.RightHand,
+      },
+      {
         path: '../assets/inv/scroll.png',
         src: await loadImage('../assets/inv/scroll.png'),
         type: RenderType.Scroll,
@@ -36,16 +64,6 @@ export class Render {
         path: '../assets/inv/potion.png',
         src: await loadImage('../assets/inv/potion.png'),
         type: RenderType.Potion,
-      },
-      {
-        path: '../assets/inv/disk_lvl1.png',
-        src: await loadImage('../assets/inv/disk_lvl1.png'),
-        type: RenderType.Weapon,
-      },
-      {
-        path: '../assets/inv/armor_lvl1.png',
-        src: await loadImage('../assets/inv/armor_lvl1.png'),
-        type: RenderType.Armory,
       },
       { path: '', src: await loadImage('../assets/entities/chest.bmp'), type: RenderType.Chest },
       { path: '', src: await loadImage('../assets/entities/ladder.bmp'), type: RenderType.Ladder },
@@ -101,7 +119,7 @@ export class Render {
   }
 
   public renderMap(context: CanvasRenderingContext2D, mapData: Array<IEntity>): void {
-    const starttime = Date.now();
+    //const starttime = Date.now();
     context.clearRect(0, 0, WIDTH, HEIGHT);
 
     const imgSize = ls.allVisible ? IMG_SIZE / 2 : IMG_SIZE;
@@ -131,50 +149,99 @@ export class Render {
         }
       }
     }
-    console.log('rendering ', Date.now() - starttime);
+    //console.log('rendering ', Date.now() - starttime);
   }
 
-  public renderInfo(
-    playerData: { hp: number; armor: number; power: number; inventory: Array<IItem> },
-    level: number,
-    chests: number,
-    mobs: number,
-  ) {
+  public renderInfo(playerData: IPlayer, level: number, chests: number, mobs: number) {
     if (!this.level || !this.chests || !this.mobs || !this.hp || !this.armor || !this.power) return;
 
     this.level.innerText = level.toString();
     this.chests.innerText = chests.toString();
     this.mobs.innerText = mobs.toString();
-    this.hp.innerText = playerData.hp.toString();
-    this.armor.innerText = playerData.armor.toString();
-    this.power.innerText = playerData.power.toString();
+    this.hp.innerText = playerData.data.hp.toString();
+    this.armor.innerText = playerData.data.armor.toString();
+    this.power.innerText = playerData.data.power.toString();
 
     for (let index = 0; index < 9; index++) {
       let path: string | null = '';
       const inv = document.getElementById(`inv-img-${index + 1}`) as HTMLImageElement;
-      const item = playerData.inventory[index];
+      const item = playerData.data.inventory[index];
       if (item) {
         switch (item.type) {
-          case ItemType.Armor: {
-            path = this.assets.find((x) => x.type === RenderType.Armory)?.path ?? null;
-            break;
-          }
           case ItemType.Potion: {
             path = this.assets.find((x) => x.type === RenderType.Potion)?.path ?? null;
-
-            break;
-          }
-          case ItemType.Weapon: {
-            path = this.assets.find((x) => x.type === RenderType.Weapon)?.path ?? null;
             break;
           }
           case ItemType.Scroll: {
             path = this.assets.find((x) => x.type === RenderType.Scroll)?.path ?? null;
             break;
           }
+          case ItemType.Armor: {
+            path = this.assets.find((x) => x.type === (item as IArmor).renderType)?.path ?? null;
+            break;
+          }
+          case ItemType.Weapon: {
+            path = this.assets.find((x) => x.type === (item as IWeapon).renderType)?.path ?? null;
+            break;
+          }
         }
       }
       inv.src = path ?? '';
+    }
+
+    for (const equipmentItem of playerData.data.equipment) {
+      if (equipmentItem.item) {
+        switch (equipmentItem.equipmentType) {
+          case EquipmentType.Head: {
+            (document.getElementById(`head-img`) as HTMLImageElement).src =
+              this.assets.find((x) => x.type === RenderType.Head)?.path ?? '';
+            break;
+          }
+          case EquipmentType.Body: {
+            (document.getElementById(`body-img`) as HTMLImageElement).src =
+              this.assets.find((x) => x.type === RenderType.Body)?.path ?? '';
+            break;
+          }
+          case EquipmentType.Legs: {
+            (document.getElementById(`legs-img`) as HTMLImageElement).src =
+              this.assets.find((x) => x.type === RenderType.Legs)?.path ?? '';
+            break;
+          }
+          case EquipmentType.LeftHand: {
+            (document.getElementById(`left-hand-img`) as HTMLImageElement).src =
+              this.assets.find((x) => x.type === RenderType.LeftHand)?.path ?? '';
+            break;
+          }
+          case EquipmentType.RightHand: {
+            (document.getElementById(`right-hand-img`) as HTMLImageElement).src =
+              this.assets.find((x) => x.type === RenderType.RightHand)?.path ?? '';
+            break;
+          }
+        }
+      } else {
+        switch (equipmentItem.equipmentType) {
+          case EquipmentType.Head: {
+            (document.getElementById(`head-img`) as HTMLImageElement).src = '';
+            break;
+          }
+          case EquipmentType.Body: {
+            (document.getElementById(`body-img`) as HTMLImageElement).src = '';
+            break;
+          }
+          case EquipmentType.Legs: {
+            (document.getElementById(`legs-img`) as HTMLImageElement).src = '';
+            break;
+          }
+          case EquipmentType.LeftHand: {
+            (document.getElementById(`left-hand-img`) as HTMLImageElement).src = '';
+            break;
+          }
+          case EquipmentType.RightHand: {
+            (document.getElementById(`right-hand-img`) as HTMLImageElement).src = '';
+            break;
+          }
+        }
+      }
     }
   }
 }

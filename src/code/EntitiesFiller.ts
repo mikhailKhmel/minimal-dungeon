@@ -1,5 +1,5 @@
 import { calcLightZone } from '../utils';
-import { EntityType } from './enums/EntityEnum';
+import { EntityType } from './enums/EntityType';
 import { EntityCreator } from './EntityCreator';
 import { Player } from './implements/entities/Player';
 import { IEntity } from './interfaces/IEntity';

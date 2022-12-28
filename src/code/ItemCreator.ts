@@ -1,5 +1,5 @@
 import { randint } from '../utils';
-import { ItemType } from './enums/ItemEnum';
+import { ItemType } from './enums/ItemType';
 import { Armor } from './implements/items/Armor';
 import { Potion } from './implements/items/Potion';
 import { Scroll } from './implements/items/Scroll';
