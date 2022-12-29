@@ -32,7 +32,7 @@ export class Weapon implements IWeapon {
       }
     }
 
-    this.powerCount = randint(ls.level - 2, ls.level + 1);
+    this.powerCount = randint(ls.level, ls.level + 3);
   }
   undo(player: IPlayer): IPlayer {
     const equipmentIndex = player.data.equipment.findIndex((x) => x.equipmentType === this.weaponType);

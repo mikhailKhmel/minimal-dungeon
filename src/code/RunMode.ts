@@ -47,7 +47,14 @@ export class RunMode {
     app.innerHTML =
       `
         <div class="container-xl mt-2">
-        <div>Версия: 0.0.2</div>
+        <div>Версия: 0.0.3</div>
+        <div id="item-info" class="card" style="position:absolute">
+                                <div class="card-body">
+                                    <h5 id="item-info-title" class="card-title"></h5>
+                                    <h6 id="item-info-subtitle" class="card-subtitle mb-2 text-muted"></h6>
+                                    <p id="item-info-text" class="card-text"></p>
+                                </div>
+                            </div>
         <div class="row">
             <div class="col-3">
                 <div class="list-group">
@@ -135,7 +142,7 @@ export class RunMode {
                     </div>
                     <div class="row gx-5">
                         <div id="inventory" class="container text-center p-2">
-                            <h6>Инвантарь</h6>
+                            <h6>Инвентарь</h6>
                             <div class="row gx-5">
                                 <div class="col p-1">
                                     <div id="inv-1" class="card">
@@ -207,17 +214,6 @@ export class RunMode {
                             </div>
                         </div>
                     </div>
-                    <div class="row gx-5">
-                        <div class="col">
-                            <div id="item-info" class="card" style="display:none">
-                                <div class="card-body">
-                                    <h5 id="item-info-title" class="card-title"></h5>
-                                    <h6 id="item-info-subtitle" class="card-subtitle mb-2 text-muted"></h6>
-                                    <p id="item-info-text" class="card-text"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -256,17 +252,18 @@ export class RunMode {
     }
   }
 
-  private _showItemInfo(invIndex: number, equipment = false): void {
+  private _showItemInfo(invIndex: number, mouseX: number, mouseY: number, equipment = false): void {
     const player = this.mapData.find((x) => x.type === EntityType.Player) as IPlayer;
     const itemInfo = document.getElementById('item-info');
     const itemInfoTitle = document.getElementById('item-info-title');
     const itemInfoSubtitle = document.getElementById('item-info-subtitle');
     const itemInfoText = document.getElementById('item-info-text');
-    if (itemInfo && itemInfoTitle && itemInfoText && itemInfoSubtitle) {
+    let hasItem = false;
+    if (itemInfoTitle && itemInfoText && itemInfoSubtitle) {
       if (!equipment) {
         const inv = player.data.inventory;
         if (inv[invIndex]) {
-          itemInfo.style['display'] = 'block';
+          hasItem = true;
           itemInfoTitle.innerText = inv[invIndex].title;
           itemInfoSubtitle.innerText = inv[invIndex].id;
           itemInfoText.innerText = inv[invIndex].info();
@@ -274,12 +271,18 @@ export class RunMode {
       } else {
         const equipmentItem = player.data.equipment.find((x) => x.equipmentType === invIndex);
         if (equipmentItem && equipmentItem.item) {
-          itemInfo.style['display'] = 'block';
+          hasItem = true;
           itemInfoTitle.innerText = equipmentItem.item.title;
           itemInfoSubtitle.innerText = equipmentItem.item.id;
           itemInfoText.innerText = equipmentItem.item.info();
         }
       }
+    }
+    if (hasItem && itemInfo) {
+      itemInfo.style['display'] = 'block';
+      itemInfo.style['zIndex'] = '1000';
+      itemInfo.style['left'] = mouseX.toString() + 'px';
+      itemInfo.style['top'] = mouseY.toString() + 'px';
     }
   }
 
@@ -344,8 +347,8 @@ export class RunMode {
     head.onclick = () => {
       this._unequipmentItem(EquipmentType.Head);
     };
-    head.onmouseenter = () => {
-      this._showItemInfo(EquipmentType.Head, true);
+    head.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(EquipmentType.Head, ev.clientX, ev.clientY, true);
     };
     head.onmouseleave = () => {
       this._clearItemInfo();
@@ -354,8 +357,8 @@ export class RunMode {
     body.onclick = () => {
       this._unequipmentItem(EquipmentType.Body);
     };
-    body.onmouseenter = () => {
-      this._showItemInfo(EquipmentType.Body, true);
+    body.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(EquipmentType.Body, ev.clientX, ev.clientY, true);
     };
     body.onmouseleave = () => {
       this._clearItemInfo();
@@ -364,8 +367,8 @@ export class RunMode {
     legs.onclick = () => {
       this._unequipmentItem(EquipmentType.Legs);
     };
-    legs.onmouseenter = () => {
-      this._showItemInfo(EquipmentType.Legs, true);
+    legs.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(EquipmentType.Legs, ev.clientX, ev.clientY, true);
     };
     legs.onmouseleave = () => {
       this._clearItemInfo();
@@ -374,8 +377,8 @@ export class RunMode {
     rightHand.onclick = () => {
       this._unequipmentItem(EquipmentType.RightHand);
     };
-    rightHand.onmouseenter = () => {
-      this._showItemInfo(EquipmentType.RightHand, true);
+    rightHand.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(EquipmentType.RightHand, ev.clientX, ev.clientY, true);
     };
     rightHand.onmouseleave = () => {
       this._clearItemInfo();
@@ -384,8 +387,8 @@ export class RunMode {
     leftHand.onclick = () => {
       this._unequipmentItem(EquipmentType.LeftHand);
     };
-    leftHand.onmouseenter = () => {
-      this._showItemInfo(EquipmentType.LeftHand, true);
+    leftHand.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(EquipmentType.LeftHand, ev.clientX, ev.clientY, true);
     };
     leftHand.onmouseleave = () => {
       this._clearItemInfo();
@@ -394,8 +397,8 @@ export class RunMode {
     inv1.onclick = () => {
       this._applyItem(0);
     };
-    inv1.onmouseenter = () => {
-      this._showItemInfo(0);
+    inv1.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(0, ev.clientX, ev.clientY);
     };
     inv1.onmouseleave = () => {
       this._clearItemInfo();
@@ -404,8 +407,8 @@ export class RunMode {
     inv2.onclick = () => {
       this._applyItem(1);
     };
-    inv2.onmouseenter = () => {
-      this._showItemInfo(1);
+    inv2.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(1, ev.clientX, ev.clientY);
     };
     inv2.onmouseleave = () => {
       this._clearItemInfo();
@@ -414,8 +417,8 @@ export class RunMode {
     inv3.onclick = () => {
       this._applyItem(2);
     };
-    inv3.onmouseenter = () => {
-      this._showItemInfo(2);
+    inv3.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(2, ev.clientX, ev.clientY);
     };
     inv3.onmouseleave = () => {
       this._clearItemInfo();
@@ -424,8 +427,8 @@ export class RunMode {
     inv4.onclick = () => {
       this._applyItem(3);
     };
-    inv4.onmouseenter = () => {
-      this._showItemInfo(3);
+    inv4.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(3, ev.clientX, ev.clientY);
     };
     inv4.onmouseleave = () => {
       this._clearItemInfo();
@@ -434,8 +437,8 @@ export class RunMode {
     inv5.onclick = () => {
       this._applyItem(4);
     };
-    inv5.onmouseenter = () => {
-      this._showItemInfo(4);
+    inv5.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(4, ev.clientX, ev.clientY);
     };
     inv5.onmouseleave = () => {
       this._clearItemInfo();
@@ -444,8 +447,8 @@ export class RunMode {
     inv6.onclick = () => {
       this._applyItem(5);
     };
-    inv6.onmouseenter = () => {
-      this._showItemInfo(5);
+    inv6.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(5, ev.clientX, ev.clientY);
     };
     inv6.onmouseleave = () => {
       this._clearItemInfo();
@@ -454,8 +457,8 @@ export class RunMode {
     inv7.onclick = () => {
       this._applyItem(6);
     };
-    inv7.onmouseenter = () => {
-      this._showItemInfo(6);
+    inv7.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(6, ev.clientX, ev.clientY);
     };
     inv7.onmouseleave = () => {
       this._clearItemInfo();
@@ -464,8 +467,8 @@ export class RunMode {
     inv8.onclick = () => {
       this._applyItem(7);
     };
-    inv8.onmouseenter = () => {
-      this._showItemInfo(7);
+    inv8.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(7, ev.clientX, ev.clientY);
     };
     inv8.onmouseleave = () => {
       this._clearItemInfo();
@@ -474,8 +477,8 @@ export class RunMode {
     inv9.onclick = () => {
       this._applyItem(8);
     };
-    inv9.onmouseenter = () => {
-      this._showItemInfo(8);
+    inv9.onmousemove = (ev: MouseEvent) => {
+      this._showItemInfo(8, ev.clientX, ev.clientY);
     };
     inv9.onmouseleave = () => {
       this._clearItemInfo();

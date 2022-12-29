@@ -17,7 +17,7 @@ export class Potion implements IPotion {
   }
 
   do(player: IPlayer) {
-    player.data.hp += randint(1, 3);
+    player.data.hp += this.hpCount;
     return player;
   }
 

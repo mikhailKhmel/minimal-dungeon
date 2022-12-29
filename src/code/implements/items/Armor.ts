@@ -35,7 +35,7 @@ export class Armor implements IArmor {
       }
     }
 
-    this.armorCount = randint(ls.level - 2, ls.level + 1);
+    this.armorCount = randint(ls.level, ls.level + 3);
   }
 
   undo(player: IPlayer): IPlayer {
