@@ -8,6 +8,10 @@ export class StartMode {
   }
 
   show(): void {
+    const loadingSpinner = document.getElementById('loading-spinner');
+    if (loadingSpinner) {
+      loadingSpinner.innerHTML = '';
+    }
     const app = document.getElementById('app');
     if (!app) return;
     app.innerHTML = `
