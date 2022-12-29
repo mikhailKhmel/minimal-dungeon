@@ -38,8 +38,10 @@ export class StartMode {
                                 <li class="list-group-item">A - влево;</li>
                                 <li class="list-group-item">S - вниз;</li>
                                 <li class="list-group-item">D - вправо;</li>
-                                <li class="list-group-item">E - атака или взаимодействие с предметами</li>
-                                <li class="list-group-item">Клик мышью по предметам инвентаря - применить предмет</li>
+                                <li class="list-group-item">E - атака или взаимодействие с окружением</li>
+                                <li class="list-group-item">ЛКМ по предметам инвентаря - применить/надеть предмет/экипировку</li>
+                                <li class="list-group-item">ЛКМ по предметам экипировки - снять предмет экипировки</li>
+                                <li class="list-group-item">ПКМ по предметам инвентаря - удалить предмет/экипировку</li>
                             </ul>
                         </div>
                     </div>

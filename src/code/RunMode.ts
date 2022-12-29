@@ -290,6 +290,12 @@ export class RunMode {
     }
   }
 
+  private _onRemoveItem(invIndex: number) {
+    const player = this.mapData.find((x) => x.type === EntityType.Player) as IPlayer;
+    const inv = player.data.inventory;
+    player.data.inventory = inv.filter((item) => item.id !== inv[invIndex].id);
+  }
+
   private _setEventListeners() {
     const inv1 = document.getElementById('inv-1');
     const inv2 = document.getElementById('inv-2');
@@ -386,6 +392,10 @@ export class RunMode {
     inv1.onmouseleave = () => {
       this._clearItemInfo();
     };
+    inv1.oncontextmenu = () => {
+      this._onRemoveItem(0);
+      return false;
+    };
 
     inv2.onclick = () => {
       this._applyItem(1);
@@ -395,6 +405,10 @@ export class RunMode {
     };
     inv2.onmouseleave = () => {
       this._clearItemInfo();
+    };
+    inv2.oncontextmenu = () => {
+      this._onRemoveItem(1);
+      return false;
     };
 
     inv3.onclick = () => {
@@ -406,6 +420,10 @@ export class RunMode {
     inv3.onmouseleave = () => {
       this._clearItemInfo();
     };
+    inv3.oncontextmenu = () => {
+      this._onRemoveItem(2);
+      return false;
+    };
 
     inv4.onclick = () => {
       this._applyItem(3);
@@ -415,6 +433,10 @@ export class RunMode {
     };
     inv4.onmouseleave = () => {
       this._clearItemInfo();
+    };
+    inv4.oncontextmenu = () => {
+      this._onRemoveItem(3);
+      return false;
     };
 
     inv5.onclick = () => {
@@ -426,6 +448,10 @@ export class RunMode {
     inv5.onmouseleave = () => {
       this._clearItemInfo();
     };
+    inv5.oncontextmenu = () => {
+      this._onRemoveItem(4);
+      return false;
+    };
 
     inv6.onclick = () => {
       this._applyItem(5);
@@ -435,6 +461,10 @@ export class RunMode {
     };
     inv6.onmouseleave = () => {
       this._clearItemInfo();
+    };
+    inv6.oncontextmenu = () => {
+      this._onRemoveItem(5);
+      return false;
     };
 
     inv7.onclick = () => {
@@ -446,6 +476,10 @@ export class RunMode {
     inv7.onmouseleave = () => {
       this._clearItemInfo();
     };
+    inv7.oncontextmenu = () => {
+      this._onRemoveItem(6);
+      return false;
+    };
 
     inv8.onclick = () => {
       this._applyItem(7);
@@ -456,6 +490,10 @@ export class RunMode {
     inv8.onmouseleave = () => {
       this._clearItemInfo();
     };
+    inv8.oncontextmenu = () => {
+      this._onRemoveItem(7);
+      return false;
+    };
 
     inv9.onclick = () => {
       this._applyItem(8);
@@ -465,6 +503,10 @@ export class RunMode {
     };
     inv9.onmouseleave = () => {
       this._clearItemInfo();
+    };
+    inv9.oncontextmenu = () => {
+      this._onRemoveItem(8);
+      return false;
     };
 
     pauseBtn.onclick = () => {
