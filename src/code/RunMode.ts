@@ -48,7 +48,7 @@ export class RunMode {
       `
         <div class="container-xl mt-2">
         <div>Версия: 0.0.3</div>
-        <div id="item-info" class="card" style="position:absolute;">
+        <div id="item-info" class="card" style="position:absolute">
                                 <div class="card-body">
                                     <h5 id="item-info-title" class="card-title"></h5>
                                     <h6 id="item-info-subtitle" class="card-subtitle mb-2 text-muted"></h6>
@@ -279,10 +279,16 @@ export class RunMode {
       }
     }
     if (hasItem && itemInfo) {
+      const WID = document.documentElement.clientWidth;
+      const HEI = document.documentElement.clientHeight;
+
+      const x = mouseX - 200 * (WID < mouseX + 200 ? 1 : 0);
+      const y = mouseY - 150 * (HEI < mouseY + 150 ? 1 : 0);
+
       itemInfo.style['display'] = 'block';
       itemInfo.style['zIndex'] = '1000';
-      itemInfo.style['left'] = (mouseX - 200).toString() + 'px';
-      itemInfo.style['top'] = mouseY.toString() + 'px';
+      itemInfo.style['left'] = x.toString() + 'px';
+      itemInfo.style['top'] = y.toString() + 'px';
       itemInfo.style['width'] = '200px';
     }
   }
@@ -349,7 +355,7 @@ export class RunMode {
       this._unequipmentItem(EquipmentType.Head);
     };
     head.onmousemove = (ev: MouseEvent) => {
-      this._showItemInfo(EquipmentType.Head, ev.clientX, ev.clientY, true);
+      this._showItemInfo(EquipmentType.Head, ev.pageX, ev.pageY, true);
     };
     head.onmouseleave = () => {
       this._clearItemInfo();
@@ -359,7 +365,7 @@ export class RunMode {
       this._unequipmentItem(EquipmentType.Body);
     };
     body.onmousemove = (ev: MouseEvent) => {
-      this._showItemInfo(EquipmentType.Body, ev.clientX, ev.clientY, true);
+      this._showItemInfo(EquipmentType.Body, ev.pageX, ev.pageY, true);
     };
     body.onmouseleave = () => {
       this._clearItemInfo();
@@ -369,7 +375,7 @@ export class RunMode {
       this._unequipmentItem(EquipmentType.Legs);
     };
     legs.onmousemove = (ev: MouseEvent) => {
-      this._showItemInfo(EquipmentType.Legs, ev.clientX, ev.clientY, true);
+      this._showItemInfo(EquipmentType.Legs, ev.pageX, ev.pageY, true);
     };
     legs.onmouseleave = () => {
       this._clearItemInfo();
@@ -379,7 +385,7 @@ export class RunMode {
       this._unequipmentItem(EquipmentType.RightHand);
     };
     rightHand.onmousemove = (ev: MouseEvent) => {
-      this._showItemInfo(EquipmentType.RightHand, ev.clientX, ev.clientY, true);
+      this._showItemInfo(EquipmentType.RightHand, ev.pageX, ev.pageY, true);
     };
     rightHand.onmouseleave = () => {
       this._clearItemInfo();
@@ -389,7 +395,7 @@ export class RunMode {
       this._unequipmentItem(EquipmentType.LeftHand);
     };
     leftHand.onmousemove = (ev: MouseEvent) => {
-      this._showItemInfo(EquipmentType.LeftHand, ev.clientX, ev.clientY, true);
+      this._showItemInfo(EquipmentType.LeftHand, ev.pageX, ev.pageY, true);
     };
     leftHand.onmouseleave = () => {
       this._clearItemInfo();
@@ -513,8 +519,8 @@ export class RunMode {
         this.lastKeyCode = '';
 
         if (this.mapWorker.gameOver) {
-          // this.changeMode(GameModes.GAMEOVER);
-          // clearInterval(interval);
+          this.changeMode(GameModes.GAMEOVER);
+          clearInterval(interval);
         }
 
         if (this.mapWorker.isNewLevel) {
