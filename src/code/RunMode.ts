@@ -45,180 +45,156 @@ export class RunMode {
       return;
     }
     app.innerHTML =
-      `
-        <div class="container-xl mt-2">
-        <div>Версия: 0.0.3</div>
-        <div id="item-info" class="card" style="position:absolute">
-                                <div class="card-body">
-                                    <h5 id="item-info-title" class="card-title"></h5>
-                                    <h6 id="item-info-subtitle" class="card-subtitle mb-2 text-muted"></h6>
-                                    <p id="item-info-text" class="card-text"></p>
-                                </div>
-                            </div>
-        <div class="row">
-            <div class="col-3">
-                <div class="list-group">
-                    <div class="list-group-item">Уровень этажа: <span id="level"></span>
-                    </div>
-                    <div class="list-group-item">Количество сундуков: <span id="chests"></span>
-                    </div>
-                    <div class="list-group-item">Количество мобов: <span id="mobs"></span>
-                    </div>
-                    <div class="list-group-item">Жизни: <span id="hp"></span>
-                    </div>
-                    <div class="list-group-item">Защита: <span id="armor"></span>
-                    </div>
-                    <div class="list-group-item">Сила: <span id="power"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6">
-                <canvas id="game"></canvas>
-            </div>
-            <div class="col-3">
-                <div class="container px-4">
-                    <div class="row gx-5">
-                        <div class="col p-3">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <button id="pause-btn" class="btn btn-warning">ПАУЗА</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gx-5">
-                        <div class="container text-center">
-                            <h6>Игрок</h6>
-                            <div class="row gx-5">
-                                <div class="col p-2">
-                                </div>
-                                <div class="col p-2">
-                                    <div id="head" class="card">
-                                        <div class="card-body btn">
-                                            <img id="head-img" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-2">
-                                </div>
-                            </div>
-                            <div class="row gx-5">
-                                <div class="col p-2">
-                                    <div id="right-hand" class="card">
-                                        <div class="card-body btn">
-                                            <img id="right-hand-img" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-2">
-                                    <div id="body" class="card">
-                                        <div class="card-body btn">
-                                            <img id="body-img" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-2">
-                                    <div id="left-hand" class="card">
-                                        <div class="card-body btn">
-                                            <img id="left-hand-img" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row gx-5">
-                                <div class="col p-2">
-                                </div>
-                                <div class="col p-2">
-                                    <div id="legs" class="card">
-                                        <div class="card-body btn">
-                                            <img id="legs-img" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-2">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gx-5">
-                        <div id="inventory" class="container text-center p-2">
-                            <h6>Инвентарь</h6>
-                            <div class="row gx-5">
-                                <div class="col p-1">
-                                    <div id="inv-1" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-1" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-1">
-                                    <div id="inv-2" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-2" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="inv-3" class="col p-1">
-                                    <div class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-3" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row gx-5">
-                                <div class="col p-1">
-                                    <div id="inv-4" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-4" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-1">
-                                    <div id="inv-5" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-5" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-1">
-                                    <div id="inv-6" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-6" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row gx-5">
-                                <div class="col p-1">
-                                    <div id="inv-7" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-7" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-1">
-                                    <div id="inv-8" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-8" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col p-1">
-                                    <div id="inv-9" class="card">
-                                        <div class="card-body btn">
-                                            <img id="inv-img-9" class=" img-thumbnail" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-        ` ?? '';
+      `<div class="container-xl mt-2">
+      <div>Версия: 0.0.3</div>
+      <div id="item-info" class="card" style="position:absolute">
+          <div class="card-body">
+              <h5 id="item-info-title" class="card-title"></h5>
+              <h6 id="item-info-subtitle" class="card-subtitle mb-2 text-muted"></h6>
+              <p id="item-info-text" class="card-text"></p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-3">
+              <div class="list-group">
+                  <div class="list-group-item">Уровень этажа: <span id="level"></span>
+                  </div>
+                  <div class="list-group-item">Количество сундуков: <span id="chests"></span>
+                  </div>
+                  <div class="list-group-item">Количество мобов: <span id="mobs"></span>
+                  </div>
+                  <div class="list-group-item">Жизни: <span id="hp"></span>
+                  </div>
+                  <div class="list-group-item">Защита: <span id="armor"></span>
+                  </div>
+                  <div class="list-group-item">Сила: <span id="power"></span>
+                  </div>
+              </div>
+          </div>
+          <div class="col-6">
+              <canvas id="game"></canvas>
+          </div>
+          <div class="col-3">
+              <div class="container px-4">
+                  <div class="row gx-5">
+                      <div class="col p-3">
+                          <div class="card">
+                              <div class="card-body text-center">
+                                  <button id="pause-btn" class="btn btn-warning">ПАУЗА</button>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row gx-5">
+                      <div class="container text-center">
+                          <h6>Игрок</h6>
+                          <div class="row gx-5">
+                              <div class="col p-2">
+                              </div>
+                              <div class="col p-2">
+                                  <div id="head" class="card btn">
+                                      <img id="head-img" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                              <div class="col p-2">
+                              </div>
+                          </div>
+                          <div class="row gx-5">
+                              <div class="col p-2">
+                                  <div id="right-hand" class="card btn">
+                                      <img id="right-hand-img" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                              <div class="col p-2">
+                                  <div id="body" class="card btn">
+                                      <img id="body-img" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                              <div class="col p-2">
+                                  <div id="left-hand" class="card btn">
+                                      <img id="left-hand-img" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row gx-5">
+                              <div class="col p-2">
+                              </div>
+                              <div class="col p-2">
+                                  <div id="legs" class="card btn">
+                                      <img id="legs-img" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                              <div class="col p-2">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row gx-5">
+                      <div id="inventory" class="container text-center p-2">
+                          <h6>Инвентарь</h6>
+                          <div class="row gx-5">
+                              <div class="col p-1">
+                                  <div id="inv-1" class="card btn">
+                                      <img id="inv-img-1" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                              <div class="col p-1">
+                                  <div id="inv-2" class="card btn">
+                                      <img id="inv-img-2" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                              <div class="col p-1">
+                                  <div id="inv-3" class="card btn">
+                                      <img id="inv-img-3" class=" img-thumbnail" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row gx-5">
+                              <div class="col p-1">
+                                  <div id="inv-4" class="card btn">
+                                      <img id="inv-img-4" class=" img-thumbnail" />
+
+                                  </div>
+                              </div>
+                              <div class="col p-1">
+                                  <div id="inv-5" class="card btn">
+                                      <img id="inv-img-5" class=" img-thumbnail" />
+
+                                  </div>
+                              </div>
+                              <div class="col p-1">
+                                  <div id="inv-6" class="card btn">
+                                      <img id="inv-img-6" class=" img-thumbnail" />
+
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row gx-5">
+                              <div class="col p-1">
+                                  <div id="inv-7" class="card btn">
+                                      <img id="inv-img-7" class=" img-thumbnail" />
+
+                                  </div>
+                              </div>
+                              <div class="col p-1">
+                                  <div id="inv-8" class="card btn">
+                                      <img id="inv-img-8" class=" img-thumbnail" />
+
+                                  </div>
+                              </div>
+                              <div class="col p-1">
+                                  <div id="inv-9" class="card btn">
+                                      <img id="inv-img-9" class=" img-thumbnail" />
+
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>` ?? '';
     const game = document.getElementById('game') as HTMLCanvasElement;
     game.width = WIDTH;
     game.height = HEIGHT;

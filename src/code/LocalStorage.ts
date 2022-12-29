@@ -10,7 +10,7 @@ class LocalStorage {
     localStorage.setItem('killedMobs', value.toString());
   }
 
-  private _allVisible = true;
+  private _allVisible = false;
 
   get allVisible(): boolean {
     return this._allVisible;
