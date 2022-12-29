@@ -18,7 +18,7 @@ export class GameOverMode {
                 <div class="card-body">
                     <h4 class="card-title">КОНЕЦ ИГРЫ</h4>
                     <h6>Вы убили ${ls.killedMobs} ${mobsWord}</h6>
-                    <button id="btn-restart" class="btn btn-info">НАЧАТЬ ЗАНОВО</button>
+                    <button id="btn-restart" class="btn btn-warning">НАЧАТЬ ЗАНОВО</button>
                 </div>
             </div>
         </div>`;

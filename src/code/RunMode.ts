@@ -13,6 +13,7 @@ import { EquipmentType } from './enums/EquipmentType';
 import { ItemType } from './enums/ItemType';
 import { IArmor } from './interfaces/IArmor';
 import { IWeapon } from './interfaces/IWeapon';
+import { IPotion } from './interfaces/IPotion';
 
 export class RunMode {
   context: CanvasRenderingContext2D | null = null;
@@ -46,7 +47,6 @@ export class RunMode {
     }
     app.innerHTML =
       `<div class="container-xl mt-2">
-      <div>Версия: 0.0.3</div>
       <div id="item-info" class="card" style="position:absolute">
           <div class="card-body">
               <h5 id="item-info-title" class="card-title"></h5>
@@ -220,6 +220,12 @@ export class RunMode {
         const item = inv[invIndex] as IWeapon;
         const itemOnPlayer = player.data.equipment.find((x) => x.equipmentType === item.weaponType);
         if (itemOnPlayer && itemOnPlayer.item) {
+          return;
+        }
+      }
+      if (inv[invIndex].type === ItemType.Potion) {
+        const potion = inv[invIndex] as IPotion;
+        if (player.data.hp + potion.hpCount > 20) {
           return;
         }
       }
