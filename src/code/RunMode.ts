@@ -48,7 +48,7 @@ export class RunMode {
       `
         <div class="container-xl mt-2">
         <div>Версия: 0.0.3</div>
-        <div id="item-info" class="card" style="position:absolute">
+        <div id="item-info" class="card" style="position:absolute;">
                                 <div class="card-body">
                                     <h5 id="item-info-title" class="card-title"></h5>
                                     <h6 id="item-info-subtitle" class="card-subtitle mb-2 text-muted"></h6>
@@ -281,8 +281,9 @@ export class RunMode {
     if (hasItem && itemInfo) {
       itemInfo.style['display'] = 'block';
       itemInfo.style['zIndex'] = '1000';
-      itemInfo.style['left'] = mouseX.toString() + 'px';
+      itemInfo.style['left'] = (mouseX - 200).toString() + 'px';
       itemInfo.style['top'] = mouseY.toString() + 'px';
+      itemInfo.style['width'] = '200px';
     }
   }
 
@@ -512,8 +513,8 @@ export class RunMode {
         this.lastKeyCode = '';
 
         if (this.mapWorker.gameOver) {
-          this.changeMode(GameModes.GAMEOVER);
-          clearInterval(interval);
+          // this.changeMode(GameModes.GAMEOVER);
+          // clearInterval(interval);
         }
 
         if (this.mapWorker.isNewLevel) {
