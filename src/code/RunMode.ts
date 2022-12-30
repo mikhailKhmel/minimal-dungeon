@@ -13,7 +13,6 @@ import { EquipmentType } from './enums/EquipmentType';
 import { ItemType } from './enums/ItemType';
 import { IArmor } from './interfaces/IArmor';
 import { IWeapon } from './interfaces/IWeapon';
-import { IPotion } from './interfaces/IPotion';
 
 export class RunMode {
   context: CanvasRenderingContext2D | null = null;
