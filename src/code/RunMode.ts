@@ -79,8 +79,8 @@ export class RunMode {
                   <div class="row gx-5">
                       <div class="col p-3">
                           <div class="card">
-                              <div class="card-body text-center">
-                                  <button id="pause-btn" class="btn btn-warning">ПАУЗА</button>
+                              <div id="pause-btn" class="card-body card-text text-center btn btn-warning">
+                                  ПАУЗА
                               </div>
                           </div>
                       </div>
@@ -220,12 +220,6 @@ export class RunMode {
         const item = inv[invIndex] as IWeapon;
         const itemOnPlayer = player.data.equipment.find((x) => x.equipmentType === item.weaponType);
         if (itemOnPlayer && itemOnPlayer.item) {
-          return;
-        }
-      }
-      if (inv[invIndex].type === ItemType.Potion) {
-        const potion = inv[invIndex] as IPotion;
-        if (player.data.hp + potion.hpCount > 20) {
           return;
         }
       }
@@ -543,6 +537,7 @@ export class RunMode {
         this.lastKeyCode = '';
 
         if (this.mapWorker.gameOver) {
+          ls.level = 1;
           this.changeMode(GameModes.GAMEOVER);
           clearInterval(interval);
         }

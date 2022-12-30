@@ -17,6 +17,10 @@ export class Potion implements IPotion {
   }
 
   do(player: IPlayer) {
+    if (player.data.hp + this.hpCount > 20) {
+      player.data.hp = 20;
+      return player;
+    }
     player.data.hp += this.hpCount;
     return player;
   }

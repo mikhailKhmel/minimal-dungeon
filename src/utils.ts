@@ -39,7 +39,10 @@ export function range(min: number, max: number): Array<number> {
 
 export function calculateMobAttack(player: IPlayer, mob: IMob): IPlayer {
   const attack = mob.data.power - player.data.armor;
-  player.data.hp -= Math.abs(attack);
+  if (attack < 0) {
+    return player;
+  }
+  player.data.hp -= attack;
   return player;
 }
 

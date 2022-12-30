@@ -8,7 +8,7 @@ export class EntitiesFiller {
   data: Array<IEntity> = [];
 
   public generate(maps: Array<Array<string>>, level: number) {
-    if (this.data.length === 0 && level === 1) {
+    if (level === 1) {
       this.fillData(maps, level);
     } else {
       const playerOldData = (this.data.find((x) => x.type === EntityType.Player) as Player).data;

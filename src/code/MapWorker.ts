@@ -385,6 +385,9 @@ export class MapWorker {
       if (player.data.hp <= 0) {
         this.gameOver = true;
       }
+      if (player.renderType === RenderType.RedPlayer) {
+        player.renderType = RenderType.PlayerDown1;
+      }
     }
 
     return mapData;

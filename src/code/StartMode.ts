@@ -18,7 +18,7 @@ export class StartMode {
         <div class="container mt-2">
         <div class="row justify-content-center align-items-center">
             <div class="col-auto mb-3 text-center" style="width: 25rem;">
-                <h1>Minimal Dungeon</h1>
+                <h1 class="display-5">Minimal Dungeon</h1>
                 <p class="text-center text-wrap">
                 <div class="card mb-2">
                     <div class="card-body">

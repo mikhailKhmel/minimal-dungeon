@@ -7,7 +7,6 @@ class LocalStorage {
 
   set killedMobs(value: number) {
     this._killedMobs = value;
-    localStorage.setItem('killedMobs', value.toString());
   }
 
   private _allVisible = false;
